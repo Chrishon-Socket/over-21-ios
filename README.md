@@ -7,7 +7,7 @@ Connect a Socket Mobile barcode scanner and scan the barcode on the back of a ID
   <img src="/img/old_enough_not_expired.PNG" width="150" />
   <img src="/img/within_10_days_expired.PNG" width="150" /> 
   <img src="/img/not_old_enough_expired.PNG" width="150" />
-  <img src="/img/not_old_enough_not expired.PNG" width="150" /> 
+  <img src="/img/not_old_enough_not_expired.PNG" width="150" /> 
   <img src="/img/old_enough_expired.PNG" width="150" />
   
 </p>
