@@ -87,6 +87,20 @@ extension ViewController: CaptureHelperDevicePresenceDelegate {
     func didNotifyArrivalForDevice(_ device: CaptureHelperDevice, withResult result: SKTResult) {
         print("scanner arrived")
         ageIndicatorView.updateScannerConnection(isConnected: true)
+        
+        device.setNotifications(SKTCaptureNotifications.scanButtonPress, withCompletionHandler: { (result) in
+            if result != SKTResult.E_NOERROR {
+                print("Error getting notifications")
+                print("result: \(result)")
+                return
+            }
+            
+            device.getNotificationsWithCompletionHandler({ (result, notifications) in
+                if let notif = notifications {
+                    print(notif)
+                }
+            })
+        })
     }
 
     func didNotifyRemovalForDevice(_ device: CaptureHelperDevice, withResult result: SKTResult) {
@@ -105,6 +119,7 @@ extension ViewController: CaptureHelperButtonsDelegate {
 }
 
 
+
 extension ViewController: CaptureHelperDeviceDecodedDataDelegate {
 
     func didReceiveDecodedData(_ decodedData: SKTCaptureDecodedData?, fromDevice device: CaptureHelperDevice, withResult result: SKTResult) {
@@ -112,12 +127,12 @@ extension ViewController: CaptureHelperDeviceDecodedDataDelegate {
             
             if let data = decodedData?.stringFromDecodedData() {
 
-                print("decoded data: \(data)")
+                //print("decoded data: \(data)")
                 
                 let words = data.components(separatedBy: "\n")
 
                 for word in words {
-                    print("word: \(word)")
+                    //print("word: \(word)")
                     let offset: Int = 3
 
                     guard word.count > offset else { continue }
@@ -134,9 +149,9 @@ extension ViewController: CaptureHelperDeviceDecodedDataDelegate {
                     print("\(dataType) - \(dataFromWord)")
                 }
                 
-                checkIfUserIsOver21()
+                //checkIfUserIsOver21()
                 
-                //test()
+                test()
             }
         }
     }
@@ -178,7 +193,7 @@ extension ViewController: CaptureHelperDeviceDecodedDataDelegate {
         let testDOB = "\(formattedMonthAsString)\(formattedDayAsString)\(birthYear)"
         
         let testDate = dateFormatter.date(from: testDOB)!
-        print("test date of birth: \(testDate)")
+        //print("test date of birth: \(testDate)")
         
         let testComponents = calendar.dateComponents([.month, .year, .day], from: testDate, to: currentDate)
         let testAge = Age(birthday: testDate, years: testComponents.year!, months: testComponents.month!, days: testComponents.day!)
@@ -195,7 +210,7 @@ extension ViewController: CaptureHelperDeviceDecodedDataDelegate {
         let testExpiryDateString = "\(formattedExpiryMonthAsString)\(formattedExpiryDayAsString)\(expiryYear)"
         
         let testExpiryDate = dateFormatter.date(from: testExpiryDateString)!
-        print("test date of expiry: \(testExpiryDate)")
+        //print("test date of expiry: \(testExpiryDate)")
         
         ageIndicatorView.updateViews(with: testAge, and: testExpiryDate)
     }
