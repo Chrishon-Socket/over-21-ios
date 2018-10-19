@@ -3,6 +3,14 @@ A quick iOS app that reads the age from driver's licenses and identification car
 
 Connect a Socket Mobile barcode scanner and scan the barcode on the back of a ID card.
 
+<p float="left">
+  <img src="/img/old_enough_not_expired.png" width="100" />
+  <img src="/img/within_10_days_expired.png" width="100" /> 
+  <img src="/img/not_old_enough_expired.png" width="100" />
+  <img src="/img/not_old_enough_not expired.png" width="100" /> 
+  <img src="/img/old_enough_expired.png" width="100" />
+</p>
+
 
 ## IMPORTANT
 At the moment, this has only been tested with New York State issued ID cards.
