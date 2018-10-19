@@ -93,3 +93,12 @@ set it back to 'DWARF' instead.
 
 
 
+
+## ABOUT
+Founded in 1992, Socket Mobile is a leading provider of data capture and delivery solutions for
+enhanced productivity in workforce mobilization. Socket Mobile’s revenue is primarily driven by
+the deployment of third party barcode enabled mobile applications that integrate Socket Mobile’s
+cordless barcode scanners and contactless reader/writers. Mobile Applications servicing the specialty
+retailer, field service, transportation, and manufacturing markets are the primary revenue drivers.
+Socket Mobile has a network of thousands of developers who use its software developer tools to add
+sophisticated data capture to their mobile applications. Socket Mobile is headquartered in Newark, Calif.
