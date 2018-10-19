@@ -11,7 +11,7 @@ When using/installing CocoaPods in a new project, the project workspace file sho
 
 The Socket Mobile Bluetooth barcode scanners and RFID Readers use the External Accessory Framework.
 
-It is very important to make sure your application info plist file contains the supported external accessory protocol string array `com.socketmobile.chs`.
+It is very important to make sure your application info plist file contains the key: `UISupportedExternalAccessoryProtocols` with array item: `com.socketmobile.chs`.
 ![Project Settings](./img/Over21ProjectSettings.png "Over21 Project Settings")
 
 The previous version of iOS used to give an error message in the traces when a barcode scanner connects to the iOS device and the protocol string was omitted, but that is no longer the case with the most recent version of iOS.
