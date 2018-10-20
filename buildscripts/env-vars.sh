@@ -1,0 +1,2 @@
+export CrashlyticsSecret=02bb68c2dc000ff369be6d47fe976ff3509e7534bc0ade56206d935653c75480
+export CrashlyticsApiKey=c8e0cc0c0ba2daa331415be090a4f7ead5e65570
