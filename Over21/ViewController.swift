@@ -42,7 +42,7 @@ class ViewController: UIViewController {
     private func setupCapture() {
         let AppInfo = SKTAppInfo();
         AppInfo.appKey = "MC0CFG6XvIijqYms9BwonSNZ85ATqotZAhUA+Rb+Paoxq3FdjFAu/ciXvOobatw=";
-        AppInfo.bundleID = "ios:com.socketmobile.Over21";
+        AppInfo.appID = "ios:com.socketmobile.Over21";
         AppInfo.developerID = "bb57d8e1-f911-47ba-b510-693be162686a";
         
         
@@ -88,7 +88,7 @@ extension ViewController: CaptureHelperDevicePresenceDelegate {
         print("scanner arrived")
         ageIndicatorView.updateScannerConnection(isConnected: true)
         
-        device.setNotifications(SKTCaptureNotifications.scanButtonPress, withCompletionHandler: { (result) in
+        device.setNotifications([SKTCaptureNotifications.scanButtonPress, SKTCaptureNotifications.scanButtonRelease], withCompletionHandler: { (result) in
             if result != SKTResult.E_NOERROR {
                 print("Error getting notifications")
                 print("result: \(result)")
@@ -109,12 +109,10 @@ extension ViewController: CaptureHelperDevicePresenceDelegate {
     }
 }
 
-extension ViewController: CaptureHelperButtonsDelegate {
-    func didChangeButtonsState(_ buttonsState: SKTCaptureButtonsState, forDevice device: CaptureHelperDelegate) {
+extension ViewController: CaptureHelperDeviceButtonsDelegate {
+    func didChangeButtonsState(_ buttonsState: SKTCaptureButtonsState, forDevice device: CaptureHelperDevice) {
         print("button state changed: \(buttonsState) for device: \(device)\n")
     }
-    
-    
     
 }
 
