@@ -125,14 +125,14 @@ public protocol CaptureHelperDevicePowerDelegate: CaptureHelperDelegate {
 
 
 /// Capture Helper protocol to comply in order to receive the buttons state
-public protocol CaptureHelperButtonsDelegate : CaptureHelperDelegate {
+public protocol CaptureHelperDeviceButtonsDelegate : CaptureHelperDelegate {
 
     /// delegate called when the state of the device's buttons has changed
     ///
     /// - Parameters:
     ///   - buttonsState: contains the new buttons state
     ///   - device: contains the device information from which the buttons state has changed
-    func didChangeButtonsState(_ buttonsState: SKTCaptureButtonsState, forDevice device: CaptureHelperDelegate)
+    func didChangeButtonsState(_ buttonsState: SKTCaptureButtonsState, forDevice device: CaptureHelperDevice)
 }
 
 /// Capture Helper protocol to comply in order to receive all the Capture delegates
@@ -140,7 +140,7 @@ public protocol CaptureHelperButtonsDelegate : CaptureHelperDelegate {
 /// coming from Capture
 public protocol CaptureHelperAllDelegate : CaptureHelperErrorDelegate, CaptureHelperDevicePresenceDelegate,
     CaptureHelperDevicePowerDelegate, CaptureHelperDeviceDecodedDataDelegate,
-CaptureHelperButtonsDelegate {
+CaptureHelperDeviceButtonsDelegate {
 
 }
 
@@ -186,7 +186,7 @@ public class CaptureHelperDevice : NSObject {
         property.id = .friendlyNameDevice
         property.type = .none
         capture.getProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result, propertyResult?.stringValue)
                 }
@@ -209,7 +209,7 @@ public class CaptureHelperDevice : NSObject {
         property.type = .string
         property.stringValue = name
         capture.setProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result)
                 }
@@ -227,7 +227,7 @@ public class CaptureHelperDevice : NSObject {
         property.id = .bluetoothAddressDevice
         property.type = .none
         capture.getProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result, propertyResult?.arrayValue)
                 }
@@ -245,7 +245,7 @@ public class CaptureHelperDevice : NSObject {
         property.id = .deviceType
         property.type = .none
         capture.getProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result, propertyResult?.uLongValue)
                 }
@@ -263,7 +263,7 @@ public class CaptureHelperDevice : NSObject {
         property.id = .versionDevice
         property.type = .none
         capture.getProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result, propertyResult?.version)
                 }
@@ -284,7 +284,7 @@ public class CaptureHelperDevice : NSObject {
         property.id = .batteryLevelDevice
         property.type = .none
         capture.getProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result, propertyResult?.uLongValue)
                 }
@@ -305,7 +305,7 @@ public class CaptureHelperDevice : NSObject {
         property.id = .powerStateDevice
         property.type = .none
         capture.getProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result, propertyResult?.uLongValue)
                 }
@@ -331,7 +331,7 @@ public class CaptureHelperDevice : NSObject {
                     buttonsState = SKTCaptureButtonsState(rawValue: Int(byteValue))
                 }
             }
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result, buttonsState)
                 }
@@ -355,7 +355,7 @@ public class CaptureHelperDevice : NSObject {
                     standConfig = SKTCaptureStandConfig(rawValue: Int(ulongValue))
                 }
             }
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result, standConfig)
                 }
@@ -376,7 +376,7 @@ public class CaptureHelperDevice : NSObject {
         property.type = .ulong
         property.uLongValue = UInt(config.rawValue)
         capture.setProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result)
                 }
@@ -400,7 +400,7 @@ public class CaptureHelperDevice : NSObject {
                     decodeAction = SKTCaptureLocalDecodeAction(rawValue: Int(byteValue))
                 }
             }
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result, decodeAction)
                 }
@@ -421,7 +421,7 @@ public class CaptureHelperDevice : NSObject {
         property.type = .byte
         property.byteValue = Int8(decodeAction.rawValue)
         capture.setProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result)
                 }
@@ -445,7 +445,7 @@ public class CaptureHelperDevice : NSObject {
                     dataAck = SKTCaptureDeviceDataAcknowledgment(rawValue: Int(uLongValue))
                 }
             }
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result, dataAck)
                 }
@@ -466,7 +466,7 @@ public class CaptureHelperDevice : NSObject {
         property.type = .ulong
         property.uLongValue = UInt(dataAcknowledgment.rawValue)
         capture.setProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result)
                 }
@@ -484,7 +484,7 @@ public class CaptureHelperDevice : NSObject {
         property.id = .postambleDevice
         property.type = .none
         capture.getProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result, propertyResult?.stringValue)
                 }
@@ -505,7 +505,7 @@ public class CaptureHelperDevice : NSObject {
         property.type = .string
         property.stringValue = postamble
         capture.setProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result)
                 }
@@ -530,7 +530,7 @@ public class CaptureHelperDevice : NSObject {
         dataSource.flags = .status
         property.dataSource = dataSource
         capture.getProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result, propertyResult?.dataSource)
                 }
@@ -551,7 +551,7 @@ public class CaptureHelperDevice : NSObject {
         property.type = .dataSource
         property.dataSource = dataSource
         capture.setProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result)
                 }
@@ -576,7 +576,7 @@ public class CaptureHelperDevice : NSObject {
         property.type = .byte
         property.byteValue = Int8(trigger.rawValue)
         capture.setProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result)
                 }
@@ -608,7 +608,7 @@ public class CaptureHelperDevice : NSObject {
         property.type = .ulong
         property.uLongValue = UInt(SKTHelper.getDataComfirmation(withReserve: 0, withRumble: rumble.rawValue, withBeep: beep.rawValue, withLed: led.rawValue))
         capture.setProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result)
                 }
@@ -629,7 +629,7 @@ public class CaptureHelperDevice : NSObject {
         property.type = .ulong
         property.uLongValue = UInt(notifications.rawValue)
         capture.setProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result)
                 }
@@ -651,7 +651,7 @@ public class CaptureHelperDevice : NSObject {
             if let longValue = propertyResult?.uLongValue {
                 notifications = SKTCaptureNotifications(rawValue: Int(longValue))
             }
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result, notifications)
                 }
@@ -672,7 +672,7 @@ public class CaptureHelperDevice : NSObject {
         property.type = .object
         property.object = parameters as NSObject
         capture.setProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result)
                 }
@@ -694,7 +694,7 @@ public class CaptureHelperDevice : NSObject {
             if let obj = propertyResult?.object {
                 parameters = obj as? Dictionary<String,Any>
             }
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result, parameters)
                 }
@@ -719,7 +719,7 @@ public class CaptureHelperDevice : NSObject {
         property.type = .array
         property.arrayValue = command
         capture.getProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async{
                     completion(result, propertyResult?.arrayValue)
                 }
@@ -739,7 +739,7 @@ public class CaptureHelperDeviceManager : CaptureHelperDevice {
         property.type = .ulong
         property.uLongValue = UInt(timeout)
         capture.setProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async {
                     completion(result)
                 }
@@ -755,7 +755,7 @@ public class CaptureHelperDeviceManager : CaptureHelperDevice {
         property.type = .string
         property.stringValue = favorites
         capture.setProperty(property) { (result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async {
                     completion(result)
                 }
@@ -770,7 +770,7 @@ public class CaptureHelperDeviceManager : CaptureHelperDevice {
         property.id = .favorite
         property.type = .none
         capture.getProperty(property) {(result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async {
                     completion(result, propertyResult?.stringValue)
                 }
@@ -786,7 +786,7 @@ public class CaptureHelperDeviceManager : CaptureHelperDevice {
         property.type = .string
         property.stringValue = deviceGuid
         capture.getProperty(property) {(result, propertyResult) in
-            if let dq = self.dispatchQueue as DispatchQueue! {
+            if let dq = self.dispatchQueue {
                 dq.async {
                     completion(result, propertyResult?.stringValue)
                 }
@@ -806,6 +806,7 @@ public class CaptureHelperDeviceManager : CaptureHelperDevice {
 /// 4- open Capture with the SKTAppInfo instance
 public class CaptureHelper : NSObject, SKTCaptureDelegate {
     private var capture : SKTCapture?
+    private var openCount = 0;
 
     fileprivate var delegatesStack = Array<CaptureHelperDelegate>()
     fileprivate var currentDelegate : CaptureHelperDelegate?
@@ -850,21 +851,25 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
     /// will call the didNotifyArrivalForDevice if the delegate pushed supports
     /// this in its protocol.
     ///
-    /// - Parameter delegate: reference to a delegate to push in the delegates stack
-    open func pushDelegate(_ delegate: CaptureHelperDelegate){
+    /// - Parameter delegate : reference to a delegate to push in the delegates stack
+    /// - Returns:
+    ///     hasBeenPushed : true is the delegate has been pushed, false otherwise
+    @discardableResult open func pushDelegate(_ delegate: CaptureHelperDelegate) -> Bool {
+        var hasBeenPushed = false
         // make sure the currentDelegate if not nil
         // that is not equal to delegate passed in argument
         if let current = currentDelegate {
             if (current as AnyObject === delegate as AnyObject) {
-                return
+                return hasBeenPushed
             }
         }
+        hasBeenPushed = true
         delegatesStack.append(delegate)
         currentDelegate = delegate
 
         if let delegate = self.currentDelegate as? CaptureHelperDevicePresenceDelegate {
             for device in devices {
-                if let dq = self.delegateDispatchQueue as DispatchQueue! {
+                if let dq = self.delegateDispatchQueue {
                     dq.async{
                         delegate.didNotifyArrivalForDevice(device.value, withResult: SKTCaptureErrors.E_NOERROR)
                     }
@@ -875,7 +880,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
         }
         if let delegate = self.currentDelegate as? CaptureHelperDeviceManagerPresenceDelegate {
             for device in deviceManagers {
-                if let dq = self.delegateDispatchQueue as DispatchQueue! {
+                if let dq = self.delegateDispatchQueue {
                     dq.async{
                         delegate.didNotifyArrivalForDeviceManager(device.value, withResult: SKTCaptureErrors.E_NOERROR)
                     }
@@ -884,20 +889,30 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
                 }
             }
         }
+        return hasBeenPushed
     }
 
 
     /// remove the delegate from the delegates stack
     ///
-    /// - Parameter delegate: reference to the class that
-    /// receive the Capture Delegates
-    open func popDelegate(_ delegate: CaptureHelperDelegate){
-        let last = delegatesStack.removeLast()
-        if (last as AnyObject === delegate as AnyObject) {
-            currentDelegate = delegatesStack.last
-        } else {
-            delegatesStack.append(last)
+    /// - Parameter delegate: reference to the class that receive
+    /// the Capture Delegates
+    ///
+    /// - Returns:
+    /// hasBeenPoped is true if the delegate has been poped from the
+    //  delegates stack, false otherwise
+    @discardableResult open func popDelegate(_ delegate: CaptureHelperDelegate) -> Bool {
+        var hasBeenRemoved = false
+        if delegatesStack.count > 0 {
+            let last = delegatesStack.removeLast()
+            if (last as AnyObject === delegate as AnyObject) {
+                hasBeenRemoved = true
+                currentDelegate = delegatesStack.last
+            } else {
+                delegatesStack.append(last)
+            }
         }
+        return hasBeenRemoved
     }
 
 
@@ -934,14 +949,16 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
         if (capture == nil) {
             capture = SKTCapture(delegate: self)
             capture?.open(with: appInfo, completionHandler: {(result) in
-                if let dq = self.delegateDispatchQueue as DispatchQueue! {
-                    dq.async{
-                        completion(result)
-                    }
+                if result == SKTCaptureErrors.E_NOERROR {
+                    self.openCount += 1;
                 } else {
-                    completion(result)
+                    self.capture = nil;
                 }
+                self.callCompletion(withResult:result, withCompletion:completion)
             })
+        } else {
+            self.openCount += 1;
+            self.callCompletion(withResult:SKTCaptureErrors.E_NOERROR, withCompletion:completion)
         }
     }
 
@@ -952,22 +969,20 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
     /// - Parameter completionHandler: called upon complete with the result code
     open func closeWithCompletionHandler(_ completion: @escaping (_ result: SKTResult)->Void){
         if let cap = capture {
-            cap.close(completionHandler:{(result) in
-                self.capture = nil
-                if let dq = self.delegateDispatchQueue as DispatchQueue! {
-                    dq.async{
-                        completion(result)
-                    }
-                } else {
-                    completion(result)
-                }
-            })
+            self.openCount -= 1;
+            if self.openCount == 0 {
+                cap.close(completionHandler:{(result) in
+                    self.capture = nil
+                    self.callCompletion(withResult:result, withCompletion:completion)
+                })
+            } else {
+                callCompletion(withResult: SKTCaptureErrors.E_NOERROR, withCompletion: completion);
+            }
         }
         else {
-            completion(SKTCaptureErrors.E_NOERROR)
+            callCompletion(withResult: SKTCaptureErrors.E_NOERROR, withCompletion: completion);
         }
     }
-
 
     /// delegate from Capture that is called each time a Capture event is fired
     ///
@@ -979,7 +994,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
         switch event.id {
         case SKTCaptureEventID.error:
             if let delegate = currentDelegate as? CaptureHelperErrorDelegate {
-                if let dq = self.delegateDispatchQueue as DispatchQueue! {
+                if let dq = self.delegateDispatchQueue {
                     dq.async{
                         delegate.didReceiveError(result)
                     }
@@ -996,7 +1011,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
                             let newDevice = CaptureHelperDevice(deviceInfo: deviceInfo, capture: dev)
                             self.devices[dev] = newDevice
                             if let delegate = self.currentDelegate as? CaptureHelperDevicePresenceDelegate {
-                                if let dq = self.delegateDispatchQueue as DispatchQueue! {
+                                if let dq = self.delegateDispatchQueue {
                                     dq.async{
                                         delegate.didNotifyArrivalForDevice(newDevice, withResult: result)
                                     }
@@ -1015,7 +1030,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
             if let deviceFound = self.devices[capture] {
                 self.devices.removeValue(forKey: capture)
                 if let delegate = self.currentDelegate as? CaptureHelperDevicePresenceDelegate {
-                    if let dq = self.delegateDispatchQueue as DispatchQueue! {
+                    if let dq = self.delegateDispatchQueue {
                         dq.async{
                             delegate.didNotifyRemovalForDevice(deviceFound, withResult: result)
                         }
@@ -1038,7 +1053,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
                             let newDevice = CaptureHelperDeviceManager(deviceInfo: deviceInfo, capture: dev)
                             self.deviceManagers[dev] = newDevice
                             if let delegate = self.currentDelegate as? CaptureHelperDeviceManagerPresenceDelegate {
-                                if let dq = self.delegateDispatchQueue as DispatchQueue! {
+                                if let dq = self.delegateDispatchQueue {
                                     dq.async{
                                         delegate.didNotifyArrivalForDeviceManager(newDevice, withResult: result)
                                     }
@@ -1056,7 +1071,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
         case SKTCaptureEventID.deviceManagerRemoval:
             if let deviceFound = self.deviceManagers[capture] {
                 if let delegate = self.currentDelegate as? CaptureHelperDeviceManagerPresenceDelegate {
-                    if let dq = self.delegateDispatchQueue as DispatchQueue! {
+                    if let dq = self.delegateDispatchQueue {
                         dq.async{
                             delegate.didNotifyRemovalForDeviceManager(deviceFound, withResult: result)
                         }
@@ -1075,7 +1090,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
         case SKTCaptureEventID.deviceDiscovered:
             if let deviceFound = self.deviceManagers[capture] {
                 if let delegate = self.currentDelegate as? CaptureHelperDeviceManagerDiscoveryDelegate {
-                    if let dq = self.delegateDispatchQueue as DispatchQueue! {
+                    if let dq = self.delegateDispatchQueue {
                         dq.async{
                             delegate.didDiscoverDevice((event.data?.stringValue)!, fromDeviceManager: deviceFound)
                         }
@@ -1088,7 +1103,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
         case SKTCaptureEventID.discoveryEnd:
             if let deviceFound = self.deviceManagers[capture] {
                 if let delegate = self.currentDelegate as? CaptureHelperDeviceManagerDiscoveryDelegate {
-                    if let dq = self.delegateDispatchQueue as DispatchQueue! {
+                    if let dq = self.delegateDispatchQueue {
                         dq.async{
                             delegate.didEndDiscoveryWithResult(result, fromDeviceManager: deviceFound)
                         }
@@ -1101,7 +1116,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
         case SKTCaptureEventID.decodedData:
             if let deviceFound = self.devices[capture] {
                 if let delegate = self.currentDelegate as? CaptureHelperDeviceDecodedDataDelegate {
-                    if let dq = self.delegateDispatchQueue as DispatchQueue! {
+                    if let dq = self.delegateDispatchQueue {
                         dq.async{
                             delegate.didReceiveDecodedData(event.data?.decodedData, fromDevice: deviceFound, withResult: result)
                         }
@@ -1115,7 +1130,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
             if let deviceFound = self.devices[capture] {
                 if let delegate = currentDelegate as? CaptureHelperDevicePowerDelegate {
                     if let value = event.data?.uLongValue {
-                        if let dq = self.delegateDispatchQueue as DispatchQueue! {
+                        if let dq = self.delegateDispatchQueue {
                             dq.async{
                                 delegate.didChangeBatteryLevel(Int(value), forDevice: deviceFound)
                             }
@@ -1130,7 +1145,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
             if let deviceFound = self.devices[capture] {
                 if let delegate = currentDelegate as? CaptureHelperDevicePowerDelegate {
                     if let value = event.data?.uLongValue {
-                        if let dq = self.delegateDispatchQueue as DispatchQueue! {
+                        if let dq = self.delegateDispatchQueue {
                             dq.async{
                                 delegate.didChangePowerState(SKTCapturePowerState(rawValue: Int(value))!, forDevice: deviceFound)
                             }
@@ -1141,6 +1156,22 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
                 }
             }
             break
+        case SKTCaptureEventID.buttons:
+            if let deviceFound = self.devices[capture] {
+                if let delegate = currentDelegate as? CaptureHelperDeviceButtonsDelegate {
+                    if let value = event.data?.byteValue {
+                        let finalValue = SKTCaptureButtonsState(rawValue: Int(value))
+                        if let dq = self.delegateDispatchQueue {
+                            dq.async{
+                                delegate.didChangeButtonsState(finalValue, forDevice: deviceFound)
+                            }
+                        } else {
+                            delegate.didChangeButtonsState(finalValue, forDevice: deviceFound)
+                        }
+                    }
+                }
+            }
+            break;
         default: break
             // not much to do
         }
@@ -1157,7 +1188,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
             property.id = .version
             property.type = .none
             cap.getProperty(property) { (result, propertyResult) in
-                if let dq = self.delegateDispatchQueue as DispatchQueue! {
+                if let dq = self.delegateDispatchQueue {
                     dq.async{
                         completion(result, propertyResult?.version)
                     }
@@ -1167,7 +1198,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
             }
         }
         else {
-            if let dq = self.delegateDispatchQueue as DispatchQueue! {
+            if let dq = self.delegateDispatchQueue {
                 dq.async{
                     completion(SKTCaptureErrors.E_INVALIDHANDLE, nil)
                 }
@@ -1192,7 +1223,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
                 if let byteValue = propertyResult?.byteValue {
                     confirmation = SKTCaptureDataConfirmation(rawValue: Int(byteValue))
                 }
-                if let dq = self.delegateDispatchQueue as DispatchQueue! {
+                if let dq = self.delegateDispatchQueue {
                     dq.async{
                         completion(result, confirmation)
                     }
@@ -1202,7 +1233,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
             }
         }
         else {
-            if let dq = self.delegateDispatchQueue as DispatchQueue! {
+            if let dq = self.delegateDispatchQueue {
                 dq.async{
                     completion(SKTCaptureErrors.E_INVALIDHANDLE, nil)
                 }
@@ -1225,7 +1256,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
             property.type = .byte
             property.byteValue = Int8(confirmationMode.rawValue)
             cap.setProperty(property) { (result, propertyResult) in
-                if let dq = self.delegateDispatchQueue as DispatchQueue! {
+                if let dq = self.delegateDispatchQueue {
                     dq.async{
                         completion(result)
                     }
@@ -1235,7 +1266,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
             }
         }
         else {
-            if let dq = self.delegateDispatchQueue as DispatchQueue! {
+            if let dq = self.delegateDispatchQueue {
                 dq.async{
                     completion(SKTCaptureErrors.E_INVALIDHANDLE)
                 }
@@ -1260,7 +1291,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
                 if let byteValue = propertyResult?.byteValue {
                     status = SKTCaptureSoftScan(rawValue: Int(byteValue))
                 }
-                if let dq = self.delegateDispatchQueue as DispatchQueue! {
+                if let dq = self.delegateDispatchQueue {
                     dq.async{
                         completion(result, status)
                     }
@@ -1270,7 +1301,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
             }
         }
         else {
-            if let dq = self.delegateDispatchQueue as DispatchQueue! {
+            if let dq = self.delegateDispatchQueue {
                 dq.async{
                     completion(SKTCaptureErrors.E_INVALIDHANDLE, nil)
                 }
@@ -1294,7 +1325,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
             property.type = .byte
             property.byteValue = Int8(status.rawValue)
             cap.setProperty(property) { (result, propertyResult) in
-                if let dq = self.delegateDispatchQueue as DispatchQueue! {
+                if let dq = self.delegateDispatchQueue {
                     dq.async{
                         completion(result)
                     }
@@ -1304,7 +1335,7 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
             }
         }
         else {
-            if let dq = self.delegateDispatchQueue as DispatchQueue! {
+            if let dq = self.delegateDispatchQueue {
                 dq.async{
                     completion(SKTCaptureErrors.E_INVALIDHANDLE)
                 }
@@ -1313,4 +1344,22 @@ public class CaptureHelper : NSObject, SKTCaptureDelegate {
             }
         }
     }
+    
+    /// call the completion block function with the result passed in argument.
+    ///
+    /// - Parameters:
+    ///   - result: contains the result to call the completion block with
+    ///   - completion: block called with the appropriate dispatch queue with the
+    /// result as argument.
+    func callCompletion(withResult result:SKTResult, withCompletion completion: @escaping (_ result: SKTResult)->Void) {
+        if let dq = self.delegateDispatchQueue {
+            dq.async{
+                completion(result)
+            }
+        } else {
+            completion(result)
+        }
+    }
+    
+
 }
