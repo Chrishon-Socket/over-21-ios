@@ -21,12 +21,39 @@ class ResultView: UIView {
     private var didLayoutSubviews: Bool = false
     
     private var shapeLayer: CAShapeLayer?
+    private var scanningLayer: CAShapeLayer?
     private var successPath: UIBezierPath?
     private var failurePath: UIBezierPath?
     private var shapeLineWidth: CGFloat = 6.5
     
     
     // MARK: - UI Elements
+    
+    private var outerView: UIView = {
+        let v = UIView()
+        v.translatesAutoresizingMaskIntoConstraints = false
+        v.backgroundColor = .white
+        return v
+    }()
+    private var centerView: UIView = {
+        let v = UIView()
+        v.translatesAutoresizingMaskIntoConstraints = false
+        v.backgroundColor = .white
+        return v
+    }()
+    private var pulsingAnimation: CABasicAnimation = {
+        let pulsingAnimation = CABasicAnimation(keyPath: "transform.scale")
+        pulsingAnimation.duration = 1
+        pulsingAnimation.fromValue = 1
+        pulsingAnimation.toValue = 1.25
+        pulsingAnimation.autoreverses = true
+        pulsingAnimation.repeatCount = Float.infinity
+        return pulsingAnimation
+    }()
+    
+    
+    
+    
     
     
     
@@ -36,11 +63,16 @@ class ResultView: UIView {
     
     init() {
         super.init(frame: .zero)
+        setupUIElements()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
+    
+    
     
     
     
@@ -51,9 +83,30 @@ class ResultView: UIView {
         super.layoutSubviews()
         
         if didLayoutSubviews == false {
+            outerView.layer.cornerRadius = self.bounds.size.width / 2
             setupShapeLayers()
             didLayoutSubviews = true
         }
+    }
+    
+    private func setupUIElements() {
+        let centerViewDimension: CGFloat = 180.0
+        
+        addSubview(outerView)
+        addSubview(centerView)
+        
+        outerView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        outerView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        outerView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        outerView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        
+        centerView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        centerView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        centerView.widthAnchor.constraint(equalToConstant: centerViewDimension).isActive = true
+        centerView.heightAnchor.constraint(equalToConstant: centerViewDimension).isActive = true
+        centerView.layer.cornerRadius = centerViewDimension / 2
+        
+        
     }
     
     private func setupShapeLayers() {
@@ -72,24 +125,40 @@ class ResultView: UIView {
         shapeLayer?.lineWidth = shapeLineWidth
         shapeLayer?.lineCap = CAShapeLayerLineCap.round
         
+        scanningLayer = CAShapeLayer()
+        scanningLayer?.fillColor = entryMAYBEAllowedColor.cgColor
+        scanningLayer?.lineWidth = shapeLineWidth * 2
+        let circlePath = UIBezierPath(roundedRect: outerView.bounds, byRoundingCorners: .allCorners, cornerRadii: outerView.bounds.size)
+        scanningLayer?.path = circlePath.cgPath
+        scanningLayer?.frame = circlePath.cgPath.boundingBoxOfPath
+        outerView.layer.addSublayer(scanningLayer!)
+        
+        setupPaths(with: centerView)
+    }
+    
+    private func setupPaths(with view: UIView) {
         // must have same number of control points
         
+        let width = view.bounds.width
+        let height = view.bounds.height
+        let origin = view.bounds.origin
+        
         successPath = UIBezierPath()
-        successPath?.move(to: .init(x: bounds.width * 0.2, y: bounds.height * 0.5))
-        successPath?.addLine(to: .init(x: bounds.width * 0.45, y: bounds.height * 0.7))
-        successPath?.move(to: .init(x: bounds.width * 0.45, y: bounds.height * 0.7))
-        successPath?.addLine(to: .init(x: bounds.width * 0.8, y: bounds.height * 0.3))
+        successPath?.move(to: .init(x: width * 0.2, y: height * 0.5))
+        successPath?.addLine(to: .init(x: width * 0.45, y: height * 0.7))
+        successPath?.move(to: .init(x: width * 0.45, y: height * 0.7))
+        successPath?.addLine(to: .init(x: width * 0.8, y: height * 0.3))
         
         failurePath = UIBezierPath()
-        failurePath?.move(to: .init(x: bounds.width * 0.2, y: bounds.height * 0.2))
-        failurePath?.addLine(to: .init(x: bounds.width * 0.8, y: bounds.height * 0.8))
-        failurePath?.move(to: .init(x: bounds.width * 0.8, y: bounds.height * 0.2))
-        failurePath?.addLine(to: .init(x: bounds.width * 0.2, y: bounds.height * 0.8))
+        failurePath?.move(to: .init(x: width * 0.2, y: height * 0.2))
+        failurePath?.addLine(to: .init(x: width * 0.8, y: height * 0.8))
+        failurePath?.move(to: .init(x: width * 0.8, y: height * 0.2))
+        failurePath?.addLine(to: .init(x: width * 0.2, y: height * 0.8))
         
         shapeLayer?.path = (failurePath?.cgPath)!
         shapeLayer?.frame = (failurePath?.cgPath.boundingBoxOfPath)!
-        shapeLayer?.frame.origin = bounds.origin
-        layer.addSublayer(shapeLayer!)
+        shapeLayer?.frame.origin = origin
+        view.layer.addSublayer(shapeLayer!)
     }
     
     public func set(result: ResultType) {
@@ -111,12 +180,23 @@ class ResultView: UIView {
         
         UIView.animate(withDuration: animationDuration, animations: { [weak self] in
             guard let strongSelf = self else { return }
-            strongSelf.shapeLayer?.strokeColor = result == .success ? UIColor.green.cgColor : UIColor.red.cgColor
+            strongSelf.shapeLayer?.strokeColor = result == .success ? entryAllowedColor.cgColor : noEntryAllowedColor.cgColor
         }) { (_) in
             
         }
         
         CATransaction.commit()
+    }
+    
+    public func reset() {
+        shapeLayer?.strokeColor = UIColor.clear.cgColor
+        stopPulsingAnimation()
+    }
+    public func startPulsingAnimation() {
+        scanningLayer?.add(pulsingAnimation, forKey: "pulsing")
+    }
+    public func stopPulsingAnimation() {
+        scanningLayer?.removeAnimation(forKey: "pulsing")
     }
 }
 

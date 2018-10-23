@@ -21,6 +21,9 @@ class ViewController: UIViewController {
 
     let calendar = Calendar.current
     
+    private let TRIGGER_BUTTON_PRESSED = 4
+    private let TRIGGER_BUTTON_RELEASED = 0
+    
     
     // MARK: - UI Elements
     
@@ -112,6 +115,13 @@ extension ViewController: CaptureHelperDevicePresenceDelegate {
 extension ViewController: CaptureHelperDeviceButtonsDelegate {
     func didChangeButtonsState(_ buttonsState: SKTCaptureButtonsState, forDevice device: CaptureHelperDevice) {
         print("button state changed: \(buttonsState) for device: \(device)\n")
+        if buttonsState.rawValue == TRIGGER_BUTTON_PRESSED {
+            ageIndicatorView.reset()
+            ageIndicatorView.updateUserInterface(isScanning: true)
+        } else if buttonsState.rawValue == TRIGGER_BUTTON_RELEASED {
+            ageIndicatorView.updateUserInterface(isScanning: false)
+        }
+        //ageIndicatorView.updateUserInterface(isScanning: buttonsState.rawValue == 4)
     }
     
 }
@@ -147,9 +157,9 @@ extension ViewController: CaptureHelperDeviceDecodedDataDelegate {
                     print("\(dataType) - \(dataFromWord)")
                 }
                 
-                //checkIfUserIsOver21()
+                checkIfUserIsOver21()
                 
-                test()
+                //test()
             }
         }
     }
