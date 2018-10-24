@@ -125,7 +125,7 @@
 				526281F9215EC71C00E291D4 /* Frameworks */,
 				526281FA215EC71C00E291D4 /* Resources */,
 				5273A2F2217663E800F4634B /* ShellScript */,
-				1E5764E67B96071DF828B386 /* [CP] Embed Pods Frameworks */,
+				54B08A4FB39C4B2EDBB882DF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -183,28 +183,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1E5764E67B96071DF828B386 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Over21/Pods-Over21-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/SKTCapture/SKTCapture.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SKTCapture.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Over21/Pods-Over21-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		4860A1914D0C0FF4F79AE0B0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -239,7 +217,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run c8e0cc0c0ba2daa331415be090a4f7ead5e65570 02bb68c2dc000ff369be6d47fe976ff3509e7534bc0ade56206d935653c75480\n";
+			shellScript = "echo 'Publish crashlytics'\n\"${PODS_ROOT}/Fabric/run\" c8e0cc0c0ba2daa331415be090a4f7ead5e65570 02bb68c2dc000ff369be6d47fe976ff3509e7534bc0ade56206d935653c75480\n";
+		};
+		54B08A4FB39C4B2EDBB882DF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Over21/Pods-Over21-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SKTCapture/SKTCapture.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SKTCapture.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Over21/Pods-Over21-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -401,6 +401,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GCJ274LWEE;
 				INFOPLIST_FILE = Over21/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
