@@ -15,23 +15,23 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.30</string>
 	<key>CFBundleVersion</key>
-	<string>3</string>
-    <key>Fabric</key>
-    <dict>
-        <key>APIKey</key>
-        <string>yourCrashlyticsApiKeyHere</string>
-        <key>Kits</key>
-        <array>
-            <dict>
-                <key>KitInfo</key>
-                <dict/>
-                <key>KitName</key>
-                <string>Crashlytics</string>
-            </dict>
-        </array>
-    </dict>
+	<string>1.0.30</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>c8e0cc0c0ba2daa331415be090a4f7ead5e65570</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
