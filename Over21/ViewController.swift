@@ -27,6 +27,16 @@ class ViewController: UIViewController {
     
     // MARK: - UI Elements
     
+    private var appVersionLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.font = UIFont.systemFont(ofSize: 16)
+        lbl.text = "version"
+        lbl.textColor = UIColor.lightGray
+        lbl.textAlignment = .center
+        return lbl
+    }()
+    
     private var ageIndicatorView: AgeIndicatorView = {
         let v = AgeIndicatorView()
         v.translatesAutoresizingMaskIntoConstraints = false
@@ -59,13 +69,31 @@ class ViewController: UIViewController {
     
     private func setupUIElements() {
         view.addSubview(ageIndicatorView)
+        view.addSubview(appVersionLabel)
+        
         ageIndicatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         ageIndicatorView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         ageIndicatorView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         ageIndicatorView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
+        appVersionLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+        appVersionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        appVersionLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        appVersionLabel.text = getAppVersion()
         
         dateFormatter.dateFormat = "MMddyyyy"
+    }
+    
+    private func getAppVersion() -> String {
+        let kVersion = "CFBundleShortVersionString"
+        
+        if let dictionary = Bundle.main.infoDictionary {
+            guard let version = dictionary[kVersion] as? String else {
+                return "--"
+            }
+            return "\(version)"
+        }
+        return ""
     }
 }
 
