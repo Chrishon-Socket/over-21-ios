@@ -83,7 +83,6 @@ class ViewController: UIViewController {
         ageLimitSelectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         ageLimitSelectionView.topAnchor.constraint(equalTo: ageIndicatorView.scannerConnectionLabel.bottomAnchor, constant: 12).isActive = true
         ageLimitSelectionView.widthAnchor.constraint(equalToConstant: 160.0).isActive = true
-        //ageLimitSelectionView.heightAnchor.constraint(equalToConstant: view.bottomAnchor).isActive = true
         
         dateFormatter.dateFormat = "MMddyyyy"
     }
