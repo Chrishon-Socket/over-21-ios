@@ -94,18 +94,6 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: CaptureHelperDeviceManagerPresenceDelegate {
-    
-    func didNotifyArrivalForDeviceManager(_ device: CaptureHelperDeviceManager, withResult result: SKTResult) {
-        print("device manager has arrived")
-    }
-    
-    func didNotifyRemovalForDeviceManager(_ device: CaptureHelperDeviceManager, withResult result: SKTResult) {
-        print("device manager removed")
-    }
-}
-
-
 extension ViewController: CaptureHelperDevicePresenceDelegate {
     
     func didNotifyArrivalForDevice(_ device: CaptureHelperDevice, withResult result: SKTResult) {
