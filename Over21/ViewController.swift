@@ -24,6 +24,12 @@ class ViewController: UIViewController {
     private let TRIGGER_BUTTON_PRESSED = 4
     private let TRIGGER_BUTTON_RELEASED = 0
     
+    // Some devices do not support the notification: scanButtonRelease
+    // If setting this notification fails, this Boolean will svae the state
+    private var buttonReleaseIsSupported: Bool = true
+    private var animationTimer: Timer?
+    
+    
     
     // MARK: - UI Elements
     
@@ -91,19 +97,34 @@ extension ViewController: CaptureHelperDevicePresenceDelegate {
         print("scanner arrived")
         ageIndicatorView.updateScannerConnection(isConnected: true)
         
-        device.setNotifications([SKTCaptureNotifications.scanButtonPress, SKTCaptureNotifications.scanButtonRelease], withCompletionHandler: { (result) in
-            if result != SKTResult.E_NOERROR {
-                print("Error getting notifications")
-                print("result: \(result)")
-                return
-            }
-            
-            device.getNotificationsWithCompletionHandler({ (result, notifications) in
-                if let notif = notifications {
-                    print(notif)
+        device.getNotificationsWithCompletionHandler { (result, notifications) in
+            if let notifications = notifications {
+                if notifications.contains([SKTCaptureNotifications.scanButtonPress, SKTCaptureNotifications.scanButtonRelease]) {
+                    // Do nothing. These notifications are already set.
+                } else {
+                    
+                    // These notifications have not been set. Set them now
+                    
+                    device.setNotifications([SKTCaptureNotifications.scanButtonPress, SKTCaptureNotifications.scanButtonRelease], withCompletionHandler: { (result) in
+                        if result == SKTResult.E_NOTSUPPORTED {
+                            // Older devices such as the D740 do not support scanButtonRelease. So just set the scanButtonPress
+                            
+                            device.setNotifications(SKTCaptureNotifications.scanButtonPress, withCompletionHandler: { [weak self] (result) in
+                                if result != SKTResult.E_NOERROR {
+                                    print("Error setting notifications for device. Result: \(result)")
+                                    return
+                                }
+                                guard let strongSelf = self else { return }
+                                strongSelf.buttonReleaseIsSupported = false
+                            })
+                            
+                        } else {
+                            // This device DOES support scanButtonRelease. No further action required.
+                        }
+                    })
                 }
-            })
-        })
+            }
+        }
     }
 
     func didNotifyRemovalForDevice(_ device: CaptureHelperDevice, withResult result: SKTResult) {
@@ -115,15 +136,36 @@ extension ViewController: CaptureHelperDevicePresenceDelegate {
 extension ViewController: CaptureHelperDeviceButtonsDelegate {
     func didChangeButtonsState(_ buttonsState: SKTCaptureButtonsState, forDevice device: CaptureHelperDevice) {
         print("button state changed: \(buttonsState) for device: \(device)\n")
+        
+        
+        if buttonReleaseIsSupported == false {
+            if buttonsState == .middle {
+                resetAnimationTimer()
+                ageIndicatorView.reset()
+                ageIndicatorView.updateUserInterface(isScanning: true)
+                return
+            }
+        }
+        
         if buttonsState.rawValue == TRIGGER_BUTTON_PRESSED {
             ageIndicatorView.reset()
             ageIndicatorView.updateUserInterface(isScanning: true)
         } else if buttonsState.rawValue == TRIGGER_BUTTON_RELEASED {
             ageIndicatorView.updateUserInterface(isScanning: false)
         }
-        //ageIndicatorView.updateUserInterface(isScanning: buttonsState.rawValue == 4)
     }
     
+    private func resetAnimationTimer() {
+        animationTimer?.invalidate()
+        let delayBeforeResettingAnimation: TimeInterval = 5
+        // After 5 seconds, the "Scanning" animation will stop
+        animationTimer = Timer.scheduledTimer(timeInterval: delayBeforeResettingAnimation, target: self, selector: #selector(stopScanningAnimation), userInfo: nil, repeats: false)
+    }
+    
+    @objc private func stopScanningAnimation() {
+        ageIndicatorView.reset()
+        ageIndicatorView.updateUserInterface(isScanning: false)
+    }
 }
 
 
