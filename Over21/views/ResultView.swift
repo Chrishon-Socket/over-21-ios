@@ -53,6 +53,22 @@ class ResultView: UIView {
     
     
     
+    public var ageLimitContainerView: UIView = {
+        let v = UIView()
+        v.translatesAutoresizingMaskIntoConstraints = false
+        v.alpha = 0.0
+        v.clipsToBounds = true
+        v.layer.cornerRadius = 10
+        return v
+    }()
+    private var ageLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.textAlignment = .center
+        lbl.font = UIFont.boldSystemFont(ofSize: 40)
+        return lbl
+    }()
+    
     
     
     
@@ -94,6 +110,8 @@ class ResultView: UIView {
         
         addSubview(outerView)
         addSubview(centerView)
+        addSubview(ageLimitContainerView)
+        ageLimitContainerView.addSubview(ageLabel)
         
         outerView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         outerView.topAnchor.constraint(equalTo: topAnchor).isActive = true
@@ -106,7 +124,15 @@ class ResultView: UIView {
         centerView.heightAnchor.constraint(equalToConstant: centerViewDimension).isActive = true
         centerView.layer.cornerRadius = centerViewDimension / 2
         
+        ageLimitContainerView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        ageLimitContainerView.topAnchor.constraint(equalTo: centerView.bottomAnchor, constant: 50).isActive = true
+        ageLimitContainerView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        ageLimitContainerView.widthAnchor.constraint(equalToConstant: 200).isActive = true
         
+        ageLabel.leadingAnchor.constraint(equalTo: ageLimitContainerView.leadingAnchor).isActive = true
+        ageLabel.topAnchor.constraint(equalTo: ageLimitContainerView.topAnchor).isActive = true
+        ageLabel.trailingAnchor.constraint(equalTo: ageLimitContainerView.trailingAnchor).isActive = true
+        ageLabel.bottomAnchor.constraint(equalTo: ageLimitContainerView.bottomAnchor).isActive = true
     }
     
     private func setupShapeLayers() {
@@ -161,7 +187,7 @@ class ResultView: UIView {
         view.layer.addSublayer(shapeLayer!)
     }
     
-    public func set(result: ResultType) {
+    public func set(result: ResultType, withAgeThreshold ageThreshold: Int) {
         
         let animationDuration: TimeInterval = 0.4
         let pathAnimation = CABasicAnimation(keyPath: "path")
@@ -178,11 +204,15 @@ class ResultView: UIView {
         self.shapeLayer?.add(pathAnimation, forKey: nil)
         self.shapeLayer?.path = result == .success ? (self.successPath?.cgPath)! : (self.failurePath?.cgPath)!
         
+        ageLabel.text = result == .success ? "\(ageThreshold)+" : "\(ageThreshold)-"
+        ageLabel.textColor = result == .success ? entryAllowedColor : noEntryAllowedColor
+        
         UIView.animate(withDuration: animationDuration, animations: { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.shapeLayer?.strokeColor = result == .success ? entryAllowedColor.cgColor : noEntryAllowedColor.cgColor
+            strongSelf.ageLimitContainerView.alpha = 1.0
         }) { (_) in
-            
+            print(self.ageLimitContainerView.frame)
         }
         
         CATransaction.commit()
@@ -191,6 +221,8 @@ class ResultView: UIView {
     public func reset() {
         shapeLayer?.strokeColor = UIColor.clear.cgColor
         stopPulsingAnimation()
+        ageLimitContainerView.alpha = 0.0
+        layoutIfNeeded()
     }
     public func startPulsingAnimation() {
         scanningLayer?.add(pulsingAnimation, forKey: "pulsing")

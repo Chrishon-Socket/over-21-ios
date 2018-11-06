@@ -26,7 +26,7 @@ class Age: NSObject {
     }
     
     public func isOldEnoughToEnter() -> Bool {
-        return years >= 21
+        return years >= AgeLimitSelectionView.ageLimitThreshhold
     }
     
     public func timeUntil21YearsOld() -> DateComponents {
