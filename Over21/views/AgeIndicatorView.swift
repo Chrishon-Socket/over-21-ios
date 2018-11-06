@@ -20,7 +20,7 @@ class AgeIndicatorView: UIView {
     
     
     
-    private var scannerConnectionLabel: UILabel = {
+    public var scannerConnectionLabel: UILabel = {
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.medium)
@@ -135,7 +135,7 @@ class AgeIndicatorView: UIView {
         resultView.layer.cornerRadius = resultViewDimension / 2
 
         expiryIndicatorView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
-        expiryIndicatorView.topAnchor.constraint(equalTo: resultView.bottomAnchor, constant: 60).isActive = true
+        expiryIndicatorView.topAnchor.constraint(equalTo: resultView.ageLimitContainerView.bottomAnchor, constant: 16).isActive = true
         expiryIndicatorView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16).isActive = true
         expiryIndicatorView.heightAnchor.constraint(equalToConstant: expiryIndicatorViewHeight).isActive = true
         
@@ -166,9 +166,9 @@ class AgeIndicatorView: UIView {
         // If the expiryDate is before (less than) the current date, it is expired
         let isExpired: Bool = cardExpiryDate < Date()
         if age.isOldEnoughToEnter() && isExpired == false {
-            resultView.set(result: .success)
+            resultView.set(result: .success, withAgeThreshold: AgeLimitSelectionView.ageLimitThreshhold)
         } else if age.isOldEnoughToEnter() && isExpired == true {
-            resultView.set(result: .failure)
+            resultView.set(result: .failure, withAgeThreshold: AgeLimitSelectionView.ageLimitThreshhold)
             extraInformationLabel.text = "This person is old enough to enter but has an expired ID"
         } else {
             let dateComponents = age.timeUntil21YearsOld()
@@ -180,7 +180,7 @@ class AgeIndicatorView: UIView {
                 }
             }
             
-            resultView.set(result: .failure)
+            resultView.set(result: .failure, withAgeThreshold: AgeLimitSelectionView.ageLimitThreshhold)
         }
         
         updateExpiry(isExpired: isExpired)

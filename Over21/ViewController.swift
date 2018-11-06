@@ -29,6 +29,22 @@ class ViewController: UIViewController {
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
+    
+    public var ageLimitSelectionView: AgeLimitSelectionView = {
+        let v = AgeLimitSelectionView()
+        v.translatesAutoresizingMaskIntoConstraints = false
+        v.layer.cornerRadius = 7
+        v.layer.borderColor = UIColor.groupTableViewBackground.cgColor
+        v.layer.borderWidth = 0.5
+        v.clipsToBounds = true
+        return v
+    }()
+    
+    
+    
+    
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,11 +72,18 @@ class ViewController: UIViewController {
     
     private func setupUIElements() {
         view.addSubview(ageIndicatorView)
+        view.addSubview(ageLimitSelectionView)
+        
         ageIndicatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         ageIndicatorView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         ageIndicatorView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         ageIndicatorView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
+        
+        ageLimitSelectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        ageLimitSelectionView.topAnchor.constraint(equalTo: ageIndicatorView.scannerConnectionLabel.bottomAnchor, constant: 12).isActive = true
+        ageLimitSelectionView.widthAnchor.constraint(equalToConstant: 160.0).isActive = true
+        //ageLimitSelectionView.heightAnchor.constraint(equalToConstant: view.bottomAnchor).isActive = true
         
         dateFormatter.dateFormat = "MMddyyyy"
     }
