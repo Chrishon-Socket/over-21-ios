@@ -192,8 +192,6 @@ extension ViewController: CaptureHelperDeviceDecodedDataDelegate {
             
             if let data = decodedData?.stringFromDecodedData() {
                 
-                //print("decoded data: \(data)")
-                
                 let words = data.components(separatedBy: "\n")
                 
                 for word in words {
@@ -275,7 +273,6 @@ extension ViewController: CaptureHelperDeviceDecodedDataDelegate {
         let testExpiryDateString = "\(formattedExpiryMonthAsString)\(formattedExpiryDayAsString)\(expiryYear)"
         
         let testExpiryDate = dateFormatter.date(from: testExpiryDateString)!
-        //print("test date of expiry: \(testExpiryDate)")
         
         ageIndicatorView.updateViews(with: testAge, and: testExpiryDate)
     }
