@@ -27,12 +27,6 @@ class ViewController: UIViewController {
     private var animationTimer: Timer?
     
     
-    // Some devices do not support the notification: scanButtonRelease
-    // If setting this notification fails, this Boolean will svae the state
-    private var buttonReleaseIsSupported: Bool = true
-    private var animationTimer: Timer?
-    
-    
     
     // MARK: - UI Elements
     
