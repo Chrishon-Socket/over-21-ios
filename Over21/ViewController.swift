@@ -72,10 +72,6 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: CaptureHelperDelegate {
-    
-}
-
 extension ViewController: CaptureHelperDeviceManagerPresenceDelegate {
     
     func didNotifyArrivalForDeviceManager(_ device: CaptureHelperDeviceManager, withResult result: SKTResult) {
