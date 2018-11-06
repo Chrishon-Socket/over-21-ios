@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     let calendar = Calendar.current
     
     // Some devices do not support the notification: scanButtonRelease
-    // If setting this notification fails, this Boolean will svae the state
+    // If setting this notification fails, this Boolean will save the state
     private var buttonReleaseIsSupported: Bool = true
     private var animationTimer: Timer?
     
