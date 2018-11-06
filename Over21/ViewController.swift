@@ -21,9 +21,6 @@ class ViewController: UIViewController {
 
     let calendar = Calendar.current
     
-    private let TRIGGER_BUTTON_PRESSED = 4
-    private let TRIGGER_BUTTON_RELEASED = 0
-    
     
     // MARK: - UI Elements
     
@@ -42,6 +39,22 @@ class ViewController: UIViewController {
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
+    
+    public var ageLimitSelectionView: AgeLimitSelectionView = {
+        let v = AgeLimitSelectionView()
+        v.translatesAutoresizingMaskIntoConstraints = false
+        v.layer.cornerRadius = 7
+        v.layer.borderColor = UIColor.groupTableViewBackground.cgColor
+        v.layer.borderWidth = 0.5
+        v.clipsToBounds = true
+        return v
+    }()
+    
+    
+    
+    
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +82,8 @@ class ViewController: UIViewController {
     
     private func setupUIElements() {
         view.addSubview(ageIndicatorView)
+        view.addSubview(ageLimitSelectionView)
+        
         view.addSubview(appVersionLabel)
         
         ageIndicatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -80,6 +95,10 @@ class ViewController: UIViewController {
         appVersionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         appVersionLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
         appVersionLabel.text = getAppVersion()
+        
+        ageLimitSelectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        ageLimitSelectionView.topAnchor.constraint(equalTo: ageIndicatorView.scannerConnectionLabel.bottomAnchor, constant: 12).isActive = true
+        ageLimitSelectionView.widthAnchor.constraint(equalToConstant: 160.0).isActive = true
         
         dateFormatter.dateFormat = "MMddyyyy"
     }
@@ -142,14 +161,12 @@ extension ViewController: CaptureHelperDevicePresenceDelegate {
 
 extension ViewController: CaptureHelperDeviceButtonsDelegate {
     func didChangeButtonsState(_ buttonsState: SKTCaptureButtonsState, forDevice device: CaptureHelperDevice) {
-        print("button state changed: \(buttonsState) for device: \(device)\n")
-        if buttonsState.rawValue == TRIGGER_BUTTON_PRESSED {
+        if buttonsState == .middle {
             ageIndicatorView.reset()
             ageIndicatorView.updateUserInterface(isScanning: true)
-        } else if buttonsState.rawValue == TRIGGER_BUTTON_RELEASED {
+        } else {
             ageIndicatorView.updateUserInterface(isScanning: false)
         }
-        //ageIndicatorView.updateUserInterface(isScanning: buttonsState.rawValue == 4)
     }
     
 }
