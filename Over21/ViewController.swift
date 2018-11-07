@@ -139,14 +139,14 @@ extension ViewController: CaptureHelperDevicePresenceDelegate {
         print("scanner arrived")
         ageIndicatorView.updateScannerConnection(isConnected: true)
         
+        device.dispatchQueue = DispatchQueue.main
+        
         getDataSource(with: device) { [weak self] (result) in
             guard let strongSelf = self else { return }
             
             if result == SKTResult.E_NOTSUPPORTED {
-                DispatchQueue.main.async {
-                    strongSelf.notificationsView.setMessage(to: "The connected device cannot scan barcodes.")
-                    strongSelf.notificationsView.animate()
-                }
+                strongSelf.notificationsView.setMessage(to: "The connected device cannot scan barcodes.")
+                strongSelf.notificationsView.animate()
             } else if result == SKTResult.E_NOERROR {
                 strongSelf.setScanButtonNotifications(with: device)
             }
@@ -181,7 +181,8 @@ extension ViewController: CaptureHelperDevicePresenceDelegate {
                 })
             } else {
                 // Return completionHandler in any other case.
-                completionHandler(result)
+                completionHandler(SKTResult.E_NOTSUPPORTED)
+                //completionHandler(result)
             }
         }
     }
