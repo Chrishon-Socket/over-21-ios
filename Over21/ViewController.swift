@@ -56,7 +56,12 @@ class ViewController: UIViewController {
         return v
     }()
     
-    
+    private var notificationsView: NotificationsView = {
+        let v = NotificationsView()
+        v.translatesAutoresizingMaskIntoConstraints = false
+        v.isHidden = true
+        return v
+    }()
     
     
     
@@ -91,6 +96,7 @@ class ViewController: UIViewController {
         view.addSubview(ageLimitSelectionView)
         
         view.addSubview(appVersionLabel)
+        view.addSubview(notificationsView)
         
         ageIndicatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         ageIndicatorView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -105,6 +111,11 @@ class ViewController: UIViewController {
         ageLimitSelectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         ageLimitSelectionView.topAnchor.constraint(equalTo: ageIndicatorView.scannerConnectionLabel.bottomAnchor, constant: 12).isActive = true
         ageLimitSelectionView.widthAnchor.constraint(equalToConstant: 160.0).isActive = true
+        
+        notificationsView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        notificationsView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        notificationsView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        notificationsView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         dateFormatter.dateFormat = "MMddyyyy"
     }
@@ -128,6 +139,70 @@ extension ViewController: CaptureHelperDevicePresenceDelegate {
         print("scanner arrived")
         ageIndicatorView.updateScannerConnection(isConnected: true)
         
+        getDataSource(with: device) { [weak self] (result) in
+            guard let strongSelf = self else { return }
+            
+            if result == SKTResult.E_NOTSUPPORTED {
+                DispatchQueue.main.async {
+                    strongSelf.notificationsView.setMessage(to: "The connected device cannot scan barcodes.")
+                    strongSelf.notificationsView.animate()
+                }
+            } else if result == SKTResult.E_NOERROR {
+                strongSelf.setScanButtonNotifications(with: device)
+            }
+        }
+    
+    }
+    
+    func didNotifyRemovalForDevice(_ device: CaptureHelperDevice, withResult result: SKTResult) {
+        print("scanner removed")
+        ageIndicatorView.updateScannerConnection(isConnected: false)
+    }
+    
+    private func getDataSource(with device: CaptureHelperDevice, completionHandler: @escaping (_ result: SKTResult) -> ()) {
+        
+        device.getDataSourceInfoFromId(SKTCaptureDataSourceID.symbologyPdf417) { (result, captureDataSource) in
+    
+            if result == SKTResult.E_NOTSUPPORTED {
+                
+                // PDF417 symbology is not supported. Notify user
+                completionHandler(SKTResult.E_NOTSUPPORTED)
+                
+            } else if result == SKTResult.E_NOERROR {
+                
+                if let captureDataSource = captureDataSource {
+                    switch captureDataSource.status {
+                    case .enabled:
+                        
+                        // Do nothing. This device supports PDF417 symbology
+                        completionHandler(result)
+                        
+                    case .disabled:
+                        
+                        // Enable PDF417, then send result to completion handler
+                        captureDataSource.status = .enabled
+                        device.setDataSourceInfo(captureDataSource, withCompletionHandler: { (result) in
+                            if result != SKTResult.E_NOERROR {
+                                print("Error setting DataSource symbology. Result: \(result)")
+                                return
+                            }
+                            completionHandler(result)
+                        })
+                        
+                    case .notSupported:
+                        
+                        // PDF417 symbology is not supported. Notify user
+                        completionHandler(SKTResult.E_NOTSUPPORTED)
+                        
+                    }
+                }
+            } else {
+                // result was something else. Possible issue with Capture?
+            }
+        }
+    }
+    
+    private func setScanButtonNotifications(with device: CaptureHelperDevice) {
         device.getNotificationsWithCompletionHandler { (result, notifications) in
             if let notifications = notifications {
                 if notifications.contains([SKTCaptureNotifications.scanButtonPress, SKTCaptureNotifications.scanButtonRelease]) {
@@ -156,11 +231,6 @@ extension ViewController: CaptureHelperDevicePresenceDelegate {
                 }
             }
         }
-    }
-    
-    func didNotifyRemovalForDevice(_ device: CaptureHelperDevice, withResult result: SKTResult) {
-        print("scanner removed")
-        ageIndicatorView.updateScannerConnection(isConnected: false)
     }
 }
 
