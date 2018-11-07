@@ -16,6 +16,7 @@
 		5273A25821700B9700F4634B /* Age.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5273A25721700B9700F4634B /* Age.swift */; };
 		5273A25A21700E8600F4634B /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5273A25921700E8600F4634B /* ResultView.swift */; };
 		5274045E21922508007AF90E /* AgeLimitSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274045D21922508007AF90E /* AgeLimitSelectionView.swift */; };
+		5274046021926078007AF90E /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274045F21926078007AF90E /* NotificationsView.swift */; };
 		D3F9ADBA08A10B106A1D2311 /* Pods_Over21.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBDA9A27CA50B44352D316F3 /* Pods_Over21.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,7 @@
 		5273A25721700B9700F4634B /* Age.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Age.swift; sourceTree = "<group>"; };
 		5273A25921700E8600F4634B /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		5274045D21922508007AF90E /* AgeLimitSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeLimitSelectionView.swift; sourceTree = "<group>"; };
+		5274045F21926078007AF90E /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		D271FC4D14509537ADB710D2 /* Pods-Over21.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Over21.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Over21/Pods-Over21.debug.xcconfig"; sourceTree = "<group>"; };
 		DE74B030E9D5F1E6F34F58DC /* Pods-Over21.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Over21.release.xcconfig"; path = "Pods/Target Support Files/Pods-Over21/Pods-Over21.release.xcconfig"; sourceTree = "<group>"; };
 		EBDA9A27CA50B44352D316F3 /* Pods_Over21.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Over21.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +97,7 @@
 				52628212215ECD5400E291D4 /* AgeIndicatorView.swift */,
 				5273A25921700E8600F4634B /* ResultView.swift */,
 				5274045D21922508007AF90E /* AgeLimitSelectionView.swift */,
+				5274045F21926078007AF90E /* NotificationsView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 				52628213215ECD5400E291D4 /* AgeIndicatorView.swift in Sources */,
 				52628200215EC71C00E291D4 /* AppDelegate.swift in Sources */,
 				5274045E21922508007AF90E /* AgeLimitSelectionView.swift in Sources */,
+				5274046021926078007AF90E /* NotificationsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
