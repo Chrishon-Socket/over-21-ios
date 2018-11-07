@@ -163,41 +163,25 @@ extension ViewController: CaptureHelperDevicePresenceDelegate {
         
         device.getDataSourceInfoFromId(SKTCaptureDataSourceID.symbologyPdf417) { (result, captureDataSource) in
     
-            if result == SKTResult.E_NOTSUPPORTED {
+            if (result == SKTResult.E_NOERROR) && (captureDataSource?.status == SKTCaptureDataSourceStatus.disabled) {
                 
-                // PDF417 symbology is not supported. Notify user
-                completionHandler(SKTResult.E_NOTSUPPORTED)
-                
-            } else if result == SKTResult.E_NOERROR {
-                
-                if let captureDataSource = captureDataSource {
-                    switch captureDataSource.status {
-                    case .enabled:
-                        
-                        // Do nothing. This device supports PDF417 symbology
-                        completionHandler(result)
-                        
-                    case .disabled:
-                        
-                        // Enable PDF417, then send result to completion handler
-                        captureDataSource.status = .enabled
-                        device.setDataSourceInfo(captureDataSource, withCompletionHandler: { (result) in
-                            if result != SKTResult.E_NOERROR {
-                                print("Error setting DataSource symbology. Result: \(result)")
-                                return
-                            }
-                            completionHandler(result)
-                        })
-                        
-                    case .notSupported:
-                        
-                        // PDF417 symbology is not supported. Notify user
-                        completionHandler(SKTResult.E_NOTSUPPORTED)
-                        
-                    }
+                guard let captureDataSource = captureDataSource else {
+                    // Result == No_Error, but SKTCaptureDataSource is nil. Possible issue with Capture?
+                    return
                 }
+                
+                // Enable PDF417, then send result to completion handler
+                captureDataSource.status = .enabled
+                device.setDataSourceInfo(captureDataSource, withCompletionHandler: { (result) in
+                    if result != SKTResult.E_NOERROR {
+                        print("Error setting DataSource symbology. Result: \(result)")
+                        return
+                    }
+                    completionHandler(result)
+                })
             } else {
-                // result was something else. Possible issue with Capture?
+                // Return completionHandler in any other case.
+                completionHandler(result)
             }
         }
     }
