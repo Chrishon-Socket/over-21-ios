@@ -145,7 +145,7 @@ extension ViewController: CaptureHelperDevicePresenceDelegate {
             guard let strongSelf = self else { return }
             
             if result == SKTResult.E_NOTSUPPORTED {
-                strongSelf.notificationsView.setMessage(to: "The connected device cannot scan barcodes.")
+                strongSelf.notificationsView.setMessage(to: "This scanner is not able to scan the driver license barcode (PDF417)")
                 strongSelf.notificationsView.animate()
             } else if result == SKTResult.E_NOERROR {
                 strongSelf.setScanButtonNotifications(with: device)
