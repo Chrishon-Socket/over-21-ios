@@ -175,14 +175,12 @@ extension ViewController: CaptureHelperDevicePresenceDelegate {
                 device.setDataSourceInfo(captureDataSource, withCompletionHandler: { (result) in
                     if result != SKTResult.E_NOERROR {
                         print("Error setting DataSource symbology. Result: \(result)")
-                        return
                     }
                     completionHandler(result)
                 })
             } else {
                 // Return completionHandler in any other case.
-                completionHandler(SKTResult.E_NOTSUPPORTED)
-                //completionHandler(result)
+                completionHandler(result)
             }
         }
     }
