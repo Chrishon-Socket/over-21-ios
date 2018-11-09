@@ -259,6 +259,14 @@ extension ViewController: CaptureHelperDeviceDecodedDataDelegate {
     func didReceiveDecodedData(_ decodedData: SKTCaptureDecodedData?, fromDevice device: CaptureHelperDevice, withResult result: SKTResult) {
         if result == SKTCaptureErrors.E_NOERROR {
             
+            if let dataSourceID = decodedData?.dataSourceID {
+                if dataSourceID != SKTCaptureDataSourceID.symbologyPdf417 {
+                    notificationsView.setMessage(to: "Scanned the wrong barcode. Try again")
+                    notificationsView.animate()
+                    return
+                } 
+            }
+            
             if let data = decodedData?.stringFromDecodedData() {
                 
                 let words = data.components(separatedBy: "\n")
