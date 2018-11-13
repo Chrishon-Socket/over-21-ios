@@ -19,11 +19,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         initializeFabricAndCrashlytics()
+        setupControllers()
         return true
     }
     
     private func initializeFabricAndCrashlytics() {
         Fabric.with([Crashlytics.self])
+    }
+    
+    private func setupControllers() {
+        let containerController = ContainerViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = containerController
+        window?.makeKeyAndVisible()
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
