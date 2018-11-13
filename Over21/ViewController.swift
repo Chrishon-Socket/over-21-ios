@@ -146,7 +146,7 @@ extension ViewController: CaptureHelperDevicePresenceDelegate {
             
             if result == SKTResult.E_NOTSUPPORTED {
                 strongSelf.notificationsView.setMessage(to: "This scanner is not able to scan the driver license barcode (PDF417)")
-                strongSelf.notificationsView.animate()
+                strongSelf.notificationsView.animate(shouldShow: true)
             } else if result == SKTResult.E_NOERROR {
                 strongSelf.setScanButtonNotifications(with: device)
             }
@@ -157,6 +157,8 @@ extension ViewController: CaptureHelperDevicePresenceDelegate {
     func didNotifyRemovalForDevice(_ device: CaptureHelperDevice, withResult result: SKTResult) {
         print("scanner removed")
         ageIndicatorView.updateScannerConnection(isConnected: false)
+        ageIndicatorView.reset()
+        notificationsView.reset()
     }
     
     private func getDataSource(with device: CaptureHelperDevice, completionHandler: @escaping (_ result: SKTResult) -> ()) {
@@ -223,6 +225,7 @@ extension ViewController: CaptureHelperDeviceButtonsDelegate {
         
         if buttonReleaseIsSupported == false {
             if buttonsState == .middle {
+                notificationsView.reset()
                 resetAnimationTimer()
                 ageIndicatorView.reset()
                 ageIndicatorView.updateUserInterface(isScanning: true)
@@ -230,8 +233,9 @@ extension ViewController: CaptureHelperDeviceButtonsDelegate {
             }
         } else {
             if buttonsState == .middle {
-                ageIndicatorView.reset()
+                notificationsView.reset()
                 ageIndicatorView.updateUserInterface(isScanning: true)
+                ageIndicatorView.reset()
             } else {
                 ageIndicatorView.updateUserInterface(isScanning: false)
             }
@@ -262,7 +266,7 @@ extension ViewController: CaptureHelperDeviceDecodedDataDelegate {
             if let dataSourceID = decodedData?.dataSourceID {
                 if dataSourceID != SKTCaptureDataSourceID.symbologyPdf417 {
                     notificationsView.setMessage(to: "Scanned the wrong barcode. Try again")
-                    notificationsView.animate()
+                    notificationsView.animate(shouldShow: true)
                     return
                 } 
             }

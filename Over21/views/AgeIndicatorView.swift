@@ -151,13 +151,6 @@ class AgeIndicatorView: UIView {
         
     }
     
-    public func updateScannerConnection(isConnected: Bool) {
-        scannerConnectionLabel.text = isConnected ? "Connected" : "No Scanner Connected"
-        if isConnected == false { reset() }
-    }
-    
-   
-    
     public func updateViews(with age: Age, and cardExpiryDate: Date) {
         
         scanComplete = true
@@ -195,14 +188,20 @@ class AgeIndicatorView: UIView {
         extraInformationLabel.text = ""
         expiryIndicatorView.backgroundColor = UIColor.clear
         expiryLabel.text = "------"
+        updateUserInterface(isScanning: false)
+        resultView.reset()
         scanComplete = false
+    }
+    
+    public func updateScannerConnection(isConnected: Bool) {
+        scannerConnectionLabel.text = isConnected ? "Connected" : "No Scanner Connected"
     }
     
     public func updateUserInterface(isScanning: Bool) {
         guard scanComplete == false else { return }
         expiryLabel.text = isScanning ? "SCANNING" : "------"
+        
         if isScanning {
-            resultView.reset()
             resultView.startPulsingAnimation()
         } else {
             resultView.stopPulsingAnimation()

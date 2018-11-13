@@ -96,10 +96,10 @@ class NotificationsView: UIView {
         messageLabel.text = newMessage
     }
     
-    @objc public func animate() {
+    @objc public func animate(shouldShow: Bool) {
         self.isHidden = false
         let animationDuration: TimeInterval = 0.75
-        self.isShowing = !self.isShowing
+        self.isShowing = shouldShow
         
         messageLabelCenterYAnchor?.constant = isShowing ? visibleConstant: invisibleConstant
         
@@ -107,10 +107,16 @@ class NotificationsView: UIView {
             self.containerView.alpha = self.isShowing ? 0.65 : 0.0
             self.layoutIfNeeded()
         }) { (_) in
-            if self.isShowing == false {
+            if shouldShow == false {
                 self.isHidden = true
             }
         }
     }
     
+    public func reset() {
+        containerView.alpha = 0.0
+        messageLabelCenterYAnchor?.constant = invisibleConstant
+        self.layoutIfNeeded()
+        self.isHidden = true
+    }
 }
