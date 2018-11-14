@@ -43,9 +43,8 @@ class Settings: NSObject {
             
             if result != SKTResult.E_NOERROR {
                 print("Error disabling symbology with id: \(symbologyId)")
+                return
             }
-            print("result: \(result)")
-            
             
             guard listOfDisabledSymbologies.contains(symbologyId.rawValue) == false else {
                 // Keep from adding the same disabled symbologies more than once
