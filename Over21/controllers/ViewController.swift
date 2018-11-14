@@ -9,6 +9,10 @@
 import UIKit
 import SKTCapture
 
+protocol ContainerDelegate: class {
+    func didScan()
+}
+
 class ViewController: UIViewController {
     
     // MARK: - Variables
@@ -25,6 +29,8 @@ class ViewController: UIViewController {
     // If setting this notification fails, this Boolean will save the state
     private var buttonReleaseIsSupported: Bool = true
     private var animationTimer: Timer?
+    
+    public weak var delegate: ContainerDelegate?
     
     
     
@@ -92,6 +98,7 @@ class ViewController: UIViewController {
     }
     
     private func setupUIElements() {
+        view.backgroundColor = .white
         view.addSubview(ageIndicatorView)
         view.addSubview(ageLimitSelectionView)
         
@@ -103,7 +110,7 @@ class ViewController: UIViewController {
         ageIndicatorView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         ageIndicatorView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
-        appVersionLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+        appVersionLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -48).isActive = true
         appVersionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         appVersionLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
         appVersionLabel.text = getAppVersion()
@@ -264,8 +271,11 @@ extension ViewController: CaptureHelperDeviceDecodedDataDelegate {
     func didReceiveDecodedData(_ decodedData: SKTCaptureDecodedData?, fromDevice device: CaptureHelperDevice, withResult result: SKTResult) {
         if result == SKTCaptureErrors.E_NOERROR {
             
+            delegate?.didScan()
+            
             if let dataSourceID = decodedData?.dataSourceID {
                 if dataSourceID != SKTCaptureDataSourceID.symbologyPdf417 {
+                    Settings.shared.disableDataSource(withId: dataSourceID, forDevice: device)                    
                     let errorMessage = "Scanned wrong barcode. \nOver21 has modified the scanner configuration that can be restored. \nPlease try again."
                     notificationsView.setMessage(to: errorMessage)
                     notificationsView.animate(shouldShow: true)
