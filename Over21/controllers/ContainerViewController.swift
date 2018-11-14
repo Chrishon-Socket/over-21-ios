@@ -125,4 +125,8 @@ extension ContainerViewController: ContainerDelegate {
         toggleCurrentViewController()
     }
     
+    func deviceConnectionStatusChanged(isConnected: Bool) {
+        settingsController.tableView.reloadData()
+    }
+    
 }

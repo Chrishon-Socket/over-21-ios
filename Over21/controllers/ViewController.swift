@@ -11,6 +11,7 @@ import SKTCapture
 
 protocol ContainerDelegate: class {
     func didScan()
+    func deviceConnectionStatusChanged(isConnected: Bool)
 }
 
 class ViewController: UIViewController {
@@ -144,6 +145,9 @@ extension ViewController: CaptureHelperDevicePresenceDelegate {
     
     func didNotifyArrivalForDevice(_ device: CaptureHelperDevice, withResult result: SKTResult) {
         print("scanner arrived")
+        
+        delegate?.deviceConnectionStatusChanged(isConnected: true)
+        
         ageIndicatorView.updateScannerConnection(isConnected: true)
         
         device.dispatchQueue = DispatchQueue.main
@@ -163,6 +167,7 @@ extension ViewController: CaptureHelperDevicePresenceDelegate {
     
     func didNotifyRemovalForDevice(_ device: CaptureHelperDevice, withResult result: SKTResult) {
         print("scanner removed")
+        delegate?.deviceConnectionStatusChanged(isConnected: false)
         ageIndicatorView.updateScannerConnection(isConnected: false)
         ageIndicatorView.reset()
         notificationsView.reset()
