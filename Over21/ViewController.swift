@@ -234,8 +234,8 @@ extension ViewController: CaptureHelperDeviceButtonsDelegate {
         } else {
             if buttonsState == .middle {
                 notificationsView.reset()
-                ageIndicatorView.updateUserInterface(isScanning: true)
                 ageIndicatorView.reset()
+                ageIndicatorView.updateUserInterface(isScanning: true)
             } else {
                 ageIndicatorView.updateUserInterface(isScanning: false)
             }
