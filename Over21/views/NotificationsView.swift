@@ -41,7 +41,7 @@ class NotificationsView: UIView {
         lbl.textAlignment = .center
         lbl.textColor = UIColor.white
         lbl.numberOfLines = 0
-        lbl.font = UIFont.systemFont(ofSize: 36, weight: UIFont.Weight.medium)
+        lbl.font = UIFont.systemFont(ofSize: 28, weight: UIFont.Weight.medium)
         return lbl
     }()
     

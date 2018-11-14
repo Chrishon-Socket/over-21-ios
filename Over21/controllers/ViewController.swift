@@ -241,8 +241,8 @@ extension ViewController: CaptureHelperDeviceButtonsDelegate {
         } else {
             if buttonsState == .middle {
                 notificationsView.reset()
-                ageIndicatorView.updateUserInterface(isScanning: true)
                 ageIndicatorView.reset()
+                ageIndicatorView.updateUserInterface(isScanning: true)
             } else {
                 ageIndicatorView.updateUserInterface(isScanning: false)
             }
@@ -275,8 +275,9 @@ extension ViewController: CaptureHelperDeviceDecodedDataDelegate {
             
             if let dataSourceID = decodedData?.dataSourceID {
                 if dataSourceID != SKTCaptureDataSourceID.symbologyPdf417 {
-                    Settings.shared.disableDataSource(withId: dataSourceID, forDevice: device)
-                    notificationsView.setMessage(to: "Scanned the wrong barcode. Try again")
+                    Settings.shared.disableDataSource(withId: dataSourceID, forDevice: device)                    
+                    let errorMessage = "Scanned wrong barcode. \nOver21 has modified the scanner configuration that can be restored. \nPlease try again."
+                    notificationsView.setMessage(to: errorMessage)
                     notificationsView.animate(shouldShow: true)
                     return
                 } 
