@@ -33,7 +33,7 @@ class ContainerViewController: UIPageViewController {
     
     private func setupUIElements() {
         
-        view.backgroundColor = .red
+        view.backgroundColor = .white
         view.addSubview(pageControl)
         
         pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
