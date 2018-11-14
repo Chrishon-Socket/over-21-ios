@@ -20,6 +20,9 @@ class Settings: NSObject {
     }
     
     
+    
+    
+    
     public var disabledSymbologies: [Int]? {
         return UserDefaults.standard.array(forKey: symbologiesKey) as? [Int]
     }
