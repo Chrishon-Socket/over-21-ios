@@ -19,8 +19,6 @@ class Settings: NSObject {
         super.init()
     }
     
-    private var device = CaptureHelper.sharedInstance.getDevices().first
-    
     
     public var disabledSymbologies: [Int]? {
         return UserDefaults.standard.array(forKey: symbologiesKey) as? [Int]
