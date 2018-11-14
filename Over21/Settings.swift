@@ -60,7 +60,6 @@ class Settings: NSObject {
     public func restoreDefaultSettings() {
         
         guard let device = CaptureHelper.sharedInstance.getDevices().first else { return }
-        print("device friendly name: \(device.deviceInfo.name)")
         
         if let listOfDisabledSymbologies = disabledSymbologies {
             
