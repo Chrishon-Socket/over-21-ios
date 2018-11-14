@@ -35,24 +35,27 @@ class Settings: NSObject {
             listOfDisabledSymbologies = list
         }
         
-        guard listOfDisabledSymbologies.contains(symbologyId.rawValue) == false else {
-            // Keep from adding the same disabled symbologies more than once
-            return
-        }
-        
-        listOfDisabledSymbologies.append(symbologyId.rawValue)
-        
-        UserDefaults.standard.set(listOfDisabledSymbologies, forKey: symbologiesKey)
-        UserDefaults.standard.synchronize()
-        
         let dataSource = SKTCaptureDataSource()
         dataSource.id = symbologyId
         dataSource.status = .disabled
-        device.setDataSourceInfo(dataSource) { (result) in
+        device.setDataSourceInfo(dataSource) { [weak self] (result) in
+            guard let strongSelf = self else { return }
+            
             if result != SKTResult.E_NOERROR {
                 print("Error disabling symbology with id: \(symbologyId)")
             }
             print("result: \(result)")
+            
+            
+            guard listOfDisabledSymbologies.contains(symbologyId.rawValue) == false else {
+                // Keep from adding the same disabled symbologies more than once
+                return
+            }
+            
+            listOfDisabledSymbologies.append(symbologyId.rawValue)
+            
+            UserDefaults.standard.set(listOfDisabledSymbologies, forKey: strongSelf.symbologiesKey)
+            UserDefaults.standard.synchronize()
         }
         
     }
