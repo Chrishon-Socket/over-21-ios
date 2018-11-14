@@ -265,7 +265,8 @@ extension ViewController: CaptureHelperDeviceDecodedDataDelegate {
             
             if let dataSourceID = decodedData?.dataSourceID {
                 if dataSourceID != SKTCaptureDataSourceID.symbologyPdf417 {
-                    notificationsView.setMessage(to: "Scanned the wrong barcode. Try again")
+                    let errorMessage = "Scanned wrong barcode. \nOver21 has modified the scanner configuration that can be restored. \nPlease try again."
+                    notificationsView.setMessage(to: errorMessage)
                     notificationsView.animate(shouldShow: true)
                     return
                 } 
