@@ -252,8 +252,9 @@ extension ViewController: CaptureHelperDeviceButtonsDelegate {
     
     private func resetAnimationTimer() {
         animationTimer?.invalidate()
-        let delayBeforeResettingAnimation: TimeInterval = 5
-        // After 5 seconds, the "Scanning" animation will stop
+        let delayBeforeResettingAnimation: TimeInterval = 3
+        // After 3 seconds, the "Scanning" animation will stop.
+        // This is about the same duration as the scanner's trigger timeout for the light/laser
         animationTimer = Timer.scheduledTimer(timeInterval: delayBeforeResettingAnimation, target: self, selector: #selector(stopScanningAnimation), userInfo: nil, repeats: false)
     }
     
