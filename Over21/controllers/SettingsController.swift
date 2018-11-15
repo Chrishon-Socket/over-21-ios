@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SKTCapture
 
 class SettingsController: UIViewController {
     
@@ -20,7 +21,7 @@ class SettingsController: UIViewController {
     
     // MARK: - UI Elements
     
-    private lazy var tableView: UITableView = {
+    public lazy var tableView: UITableView = {
         let tbv = UITableView()
         tbv.translatesAutoresizingMaskIntoConstraints = false
         tbv.backgroundColor = .clear
@@ -76,7 +77,10 @@ extension SettingsController: UITableViewDelegate, UITableViewDataSource {
         
         cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? SettingsCell
         
-        cell?.toggleButton.isEnabled = (Settings.shared.disabledSymbologies?.count ?? 0) > 0
+        let numberOfDisabledSymbologies = (Settings.shared.disabledSymbologies?.count ?? 0)
+        let numberOfConnectedDevices = CaptureHelper.sharedInstance.getDevices().count
+        
+        cell?.toggleButton.isEnabled = (numberOfDisabledSymbologies > 0 && numberOfConnectedDevices > 0)
         
         cell?.delegate = self
         
