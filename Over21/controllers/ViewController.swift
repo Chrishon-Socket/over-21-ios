@@ -278,6 +278,11 @@ extension ViewController: CaptureHelperDeviceDecodedDataDelegate {
             
             delegate?.didScan()
             
+            // Stop the timer for devices that do not support scanButtonRelease
+            if buttonReleaseIsSupported == false {
+                animationTimer?.invalidate()
+            }
+            
             if let dataSourceID = decodedData?.dataSourceID {
                 if dataSourceID != SKTCaptureDataSourceID.symbologyPdf417 {
                     Settings.shared.disableDataSource(withId: dataSourceID, forDevice: device)                    
