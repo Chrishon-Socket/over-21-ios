@@ -17,7 +17,7 @@ class AgeLimitSelectionView: UIView {
     
     // MARK: - Variables
     
-    public static var ageLimitThreshhold: Int = 21 // 21 by default
+    public static var ageLimitThreshhold: Int = 18 // 18 by default
     
     public let buttonHeight: CGFloat = 30
 
