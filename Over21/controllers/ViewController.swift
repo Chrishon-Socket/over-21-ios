@@ -87,9 +87,6 @@ class ViewController: UIViewController {
         setupUIElements()
         initUPOS()
         btLookup()
-        
-        //parseDecodedBarCode("C1USA0427797024MSC1380273242\n<<6010014M2405193IRL<<<<<<<<<<<4MILLS<<KEVIN<JAMES<<<<<<<<<<<<")
-        //checkIfUserIsOver21()
     }
     
     private func setupCapture() {
