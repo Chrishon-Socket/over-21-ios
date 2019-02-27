@@ -425,21 +425,11 @@ extension ViewController: UPOSDeviceControlDelegate {
         printerCon?.delegate = self
         printerCon?.setTextEncoding(String.Encoding.ascii.rawValue)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(didBTStart(notification:)), name: NSNotification.Name(rawValue: __NOTIFICATION_NAME_BT_WILL_LOOKUP_), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didBTDeviceList(notification:)), name: NSNotification.Name(rawValue: __NOTIFICATION_NAME_BT_FOUND_PRINTER_), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didBTComplete(notification:)), name: NSNotification.Name(rawValue: __NOTIFICATION_NAME_BT_LOOKUP_COMPLETE_), object: nil)
     }
     
     func btLookup() {
         printerCon?.refreshBTLookup()
-    }
-    
-    @objc func didBTStart(notification: NSNotification) {
-        
-    }
-    
-    @objc func didBTComplete(notification: NSNotification) {
-        
     }
     
     @objc func didBTDeviceList(notification: NSNotification) {
