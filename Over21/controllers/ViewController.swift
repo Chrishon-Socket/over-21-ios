@@ -456,11 +456,15 @@ extension ViewController: UPOSDeviceControlDelegate {
         
         var result = printerCon?.open(target?.modelName)
         if result == nil || result! != 0 {
+            notificationsView.setMessage(to: "Cannot connect to printer. Reason: " + (UPOS_ERROR_STRINGS[result!] ?? UPOS_UNKOWN_ERROR_STRING))
+            notificationsView.animate(shouldShow: true)
             return
         }
         
         result = printerCon?.claim(5000)
         if result == nil || result != 0 {
+            notificationsView.setMessage(to: "Cannot connect to printer. Reason: " + (UPOS_ERROR_STRINGS[result!] ?? UPOS_UNKOWN_ERROR_STRING))
+            notificationsView.animate(shouldShow: true)
             return
         }
         
