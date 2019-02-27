@@ -502,6 +502,6 @@ extension ViewController: UPOSDeviceControlDelegate {
     
     func printBarCodeToPrinter(data: String) {
         print(data)
-        printerCon?.printBarcode(Int(__UPOS_PRINTER_STATION.PTR_S_RECEIPT.rawValue), data: data, symbology: 104, height: 60, width: 200, alignment: -2, textPostion: -13)
+        printerCon?.printBarcode(Int(__UPOS_PRINTER_STATION.PTR_S_RECEIPT.rawValue), data: data, symbology: PTR_BCS_EAN13, height: 60, width: 200, alignment: PTR_BC_CENTER, textPostion: PTR_BC_TEXT_BELOW)
     }
 }
