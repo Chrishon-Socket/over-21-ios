@@ -24,7 +24,6 @@ class AgeIndicatorView: UIView {
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.medium)
-        //lbl.adjustsFontSizeToFitWidth = true
         lbl.text = "No Scanner Connected"
         lbl.textColor = UIColor.darkGray
         lbl.textAlignment = .center
@@ -36,7 +35,6 @@ class AgeIndicatorView: UIView {
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.medium)
-        //lbl.adjustsFontSizeToFitWidth = true
         lbl.text = "No Printer Connected"
         lbl.textColor = UIColor.darkGray
         lbl.textAlignment = .center
