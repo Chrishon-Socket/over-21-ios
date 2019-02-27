@@ -301,43 +301,49 @@ extension ViewController: CaptureHelperDeviceDecodedDataDelegate {
         }
     }
     
+    private func parseDriverLicense(_ data: String) {
+        let words = data.components(separatedBy: "\n")
+        
+        for word in words {
+            //print("word: \(word)")
+            let offset: Int = 3
+            
+            guard word.count > offset else { continue }
+            
+            let upperIndex = word.index(word.startIndex, offsetBy: offset - 1)
+            
+            let dataType = String(word[...upperIndex])
+            
+            let lowerIndex = word.index(word.startIndex, offsetBy: offset)
+            let dataFromWord = String(word[lowerIndex...])
+            
+            map[dataType] = dataFromWord
+            
+            print("\(dataType) - \(dataFromWord)")
+        }
+    }
+    private func parseTravelID(_ data: String) {
+        let trimmedData = data.replacingOccurrences(of: "\n", with: "")
+        if trimmedData.count == 90 {
+            let dateOfBirth = String(trimmedData[trimmedData.index(trimmedData.startIndex, offsetBy: 30)..<trimmedData.index(trimmedData.startIndex, offsetBy: 36)])
+            let expiryDate = String(trimmedData[trimmedData.index(trimmedData.startIndex, offsetBy: 38)..<trimmedData.index(trimmedData.startIndex, offsetBy: 44)])
+            let name = String(trimmedData[trimmedData.index(trimmedData.startIndex, offsetBy: 60)..<trimmedData.index(trimmedData.startIndex, offsetBy: 90)])
+            
+            let surnameEndIndex = name.range(of: "<<")
+            let surname = String(name.prefix(surnameEndIndex?.lowerBound.encodedOffset ?? 0))
+            let givenname = String(name.suffix(30 - (surnameEndIndex?.upperBound.encodedOffset ?? 1) + 1)).replacingOccurrences(of: "<", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+            
+            map["DBB"] = dateOfBirth
+            map["DBA"] = expiryDate
+            map["DAB"] = surname
+            map["DAC"] = givenname
+        }
+    }
     private func parseDecodedBarCode(_ data: String) {
         if data.starts(with: "@") {
-            let words = data.components(separatedBy: "\n")
-            
-            for word in words {
-                //print("word: \(word)")
-                let offset: Int = 3
-                
-                guard word.count > offset else { continue }
-                
-                let upperIndex = word.index(word.startIndex, offsetBy: offset - 1)
-                
-                let dataType = String(word[...upperIndex])
-                
-                let lowerIndex = word.index(word.startIndex, offsetBy: offset)
-                let dataFromWord = String(word[lowerIndex...])
-                
-                map[dataType] = dataFromWord
-                
-                print("\(dataType) - \(dataFromWord)")
-            }
+            parseDriverLicense(data)
         } else {
-            let trimmedData = data.replacingOccurrences(of: "\n", with: "")
-            if trimmedData.count == 90 {
-                let dateOfBirth = String(trimmedData[trimmedData.index(trimmedData.startIndex, offsetBy: 30)..<trimmedData.index(trimmedData.startIndex, offsetBy: 36)])
-                let expiryDate = String(trimmedData[trimmedData.index(trimmedData.startIndex, offsetBy: 38)..<trimmedData.index(trimmedData.startIndex, offsetBy: 44)])
-                let name = String(trimmedData[trimmedData.index(trimmedData.startIndex, offsetBy: 60)..<trimmedData.index(trimmedData.startIndex, offsetBy: 90)])
-                
-                let surnameEndIndex = name.range(of: "<<")
-                let surname = String(name.prefix(surnameEndIndex?.lowerBound.encodedOffset ?? 0))
-                let givenname = String(name.suffix(30 - (surnameEndIndex?.upperBound.encodedOffset ?? 1) + 1)).replacingOccurrences(of: "<", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-                
-                map["DBB"] = dateOfBirth
-                map["DBA"] = expiryDate
-                map["DAB"] = surname
-                map["DAC"] = givenname
-            }
+            parseTravelID(data)
         }
     }
     private func checkIfUserIsOver21() {
