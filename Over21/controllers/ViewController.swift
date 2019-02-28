@@ -442,6 +442,8 @@ extension ViewController: UPOSDeviceControlDelegate {
         }
     }
     
+    // function of UPOSDeviceControlDelegate.
+    // it's called from Bixilon library.
     func statusUpdateEvent(_ status: NSNumber!) {
         
     }
