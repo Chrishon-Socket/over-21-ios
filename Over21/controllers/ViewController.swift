@@ -337,6 +337,9 @@ extension ViewController: CaptureHelperDeviceDecodedDataDelegate {
             map["DBA"] = expiryDate
             map["DAB"] = surname
             map["DAC"] = givenname
+        } else {
+            notificationsView.setMessage(to: "Scanned wrong barcode.")
+            notificationsView.animate(shouldShow: true)
         }
     }
     private func parseDecodedBarCode(_ data: String) {
