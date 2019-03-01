@@ -494,7 +494,7 @@ extension ViewController: UPOSDeviceControlDelegate {
         let givenName = map["DAC"] ?? ""
         printToPrinter(data: "Age verified\n\n")
         printToPrinter(data: "Hi \(givenName),\n" )
-        printToPrinter(data: "Please enjoy your 10%\noff coupon for your\ndrink.\n\n")
+        printToPrinter(data: "Please enjoy your 10% off\ncoupon for your\ndrink.\n\n")
         printBarCodeToPrinter(data: "1234567890123")
         printToPrinter(data: "\n\n\n\n\n")
         printToPrinter(data: "\u{1B}")
