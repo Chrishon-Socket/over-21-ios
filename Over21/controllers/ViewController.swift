@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     var map: [String: String] = [:]
     
     var dateFormatter = DateFormatter()
-    
+    let shortDateFormatter = DateFormatter()
     let calendar = Calendar.current
     
     // Some devices do not support the notification: scanButtonRelease
@@ -34,6 +34,10 @@ class ViewController: UIViewController {
     public weak var delegate: ContainerDelegate?
     
     
+    //Printer variables
+    private var printerCon: UPOSPrinterController?
+    private var printerList: UPOSPrinters?
+    private var printerDevice: UPOSPrinter?
     
     // MARK: - UI Elements
     
@@ -81,6 +85,8 @@ class ViewController: UIViewController {
         setupCapture()
         
         setupUIElements()
+        initUPOS()
+        btLookup()
     }
     
     private func setupCapture() {
@@ -126,6 +132,7 @@ class ViewController: UIViewController {
         notificationsView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         dateFormatter.dateFormat = "MMddyyyy"
+        shortDateFormatter.dateFormat = "yyMMdd"
     }
     
     private func getAppVersion() -> String {
@@ -282,38 +289,10 @@ extension ViewController: CaptureHelperDeviceDecodedDataDelegate {
             if buttonReleaseIsSupported == false {
                 animationTimer?.invalidate()
             }
-            
-            if let dataSourceID = decodedData?.dataSourceID {
-                if dataSourceID != SKTCaptureDataSourceID.symbologyPdf417 {
-                    Settings.shared.disableDataSource(withId: dataSourceID, forDevice: device)                    
-                    let errorMessage = "Scanned wrong barcode. \nOver21 has modified the scanner configuration that can be restored. \nPlease try again."
-                    notificationsView.setMessage(to: errorMessage)
-                    notificationsView.animate(shouldShow: true)
-                    return
-                } 
-            }
+
             
             if let data = decodedData?.stringFromDecodedData() {
-                
-                let words = data.components(separatedBy: "\n")
-                
-                for word in words {
-                    //print("word: \(word)")
-                    let offset: Int = 3
-                    
-                    guard word.count > offset else { continue }
-                    
-                    let upperIndex = word.index(word.startIndex, offsetBy: offset - 1)
-                    
-                    let dataType = String(word[...upperIndex])
-                    
-                    let lowerIndex = word.index(word.startIndex, offsetBy: offset)
-                    let dataFromWord = String(word[lowerIndex...])
-                    
-                    map[dataType] = dataFromWord
-                    
-                    print("\(dataType) - \(dataFromWord)")
-                }
+                parseDecodedBarCode(data)
                 
                 checkIfUserIsOver21()
                 
@@ -322,15 +301,68 @@ extension ViewController: CaptureHelperDeviceDecodedDataDelegate {
         }
     }
     
+    private func parseDriverLicense(_ data: String) {
+        let words = data.components(separatedBy: "\n")
+        
+        for word in words {
+            //print("word: \(word)")
+            let offset: Int = 3
+            
+            guard word.count > offset else { continue }
+            
+            let upperIndex = word.index(word.startIndex, offsetBy: offset - 1)
+            
+            let dataType = String(word[...upperIndex])
+            
+            let lowerIndex = word.index(word.startIndex, offsetBy: offset)
+            let dataFromWord = String(word[lowerIndex...])
+            
+            map[dataType] = dataFromWord
+            
+            print("\(dataType) - \(dataFromWord)")
+        }
+    }
+    private func parseTravelID(_ data: String) {
+        let trimmedData = data.replacingOccurrences(of: "\n", with: "")
+        if trimmedData.count == 90 {
+            let dateOfBirth = String(trimmedData[trimmedData.index(trimmedData.startIndex, offsetBy: 30)..<trimmedData.index(trimmedData.startIndex, offsetBy: 36)])
+            let expiryDate = String(trimmedData[trimmedData.index(trimmedData.startIndex, offsetBy: 38)..<trimmedData.index(trimmedData.startIndex, offsetBy: 44)])
+            let name = String(trimmedData[trimmedData.index(trimmedData.startIndex, offsetBy: 60)..<trimmedData.index(trimmedData.startIndex, offsetBy: 90)])
+            
+            let surnameEndIndex = name.range(of: "<<")
+            let surname = String(name.prefix(surnameEndIndex?.lowerBound.encodedOffset ?? 0))
+            let givenname = String(name.suffix(30 - (surnameEndIndex?.upperBound.encodedOffset ?? 1) + 1)).replacingOccurrences(of: "<", with: " ").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+            
+            map["DBB"] = dateOfBirth
+            map["DBA"] = expiryDate
+            map["DAB"] = surname
+            map["DAC"] = givenname
+        } else {
+            notificationsView.setMessage(to: "Scanned wrong barcode.")
+            notificationsView.animate(shouldShow: true)
+        }
+    }
+    private func parseDecodedBarCode(_ data: String) {
+        if data.starts(with: "@") {
+            parseDriverLicense(data)
+        } else {
+            parseTravelID(data)
+        }
+    }
     private func checkIfUserIsOver21() {
         if let dateOfBirth = map["DBB"], let expiryDate = map["DBA"] {
-            if let cardExpiryDate = dateFormatter.date(from: expiryDate) {
-                
+            var expiryDateObj: Date?
+            var dateOfBirthObj: Date?
+            if dateOfBirth.count == 6 {
+                dateOfBirthObj = shortDateFormatter.date(from: dateOfBirth)
+                expiryDateObj =  shortDateFormatter.date(from: expiryDate)
+            } else {
+                dateOfBirthObj = dateFormatter.date(from: dateOfBirth)
+                expiryDateObj =  dateFormatter.date(from: expiryDate)
+            }
+            if dateOfBirthObj != nil && expiryDateObj != nil {
                 let currentDate = Date()
-                
-                guard let dateOfBirth = dateFormatter.date(from: dateOfBirth) else { return }
-                
-                let components = calendar.dateComponents([.month, .year, .day], from: dateOfBirth, to: currentDate)
+                let components = calendar.dateComponents([.month, .year, .day], from: dateOfBirthObj!, to: currentDate)
                 
                 guard
                     let years = components.year,
@@ -338,9 +370,13 @@ extension ViewController: CaptureHelperDeviceDecodedDataDelegate {
                     let days = components.day
                     else { return }
                 
-                let age = Age(birthday: dateOfBirth, years: years, months: months, days: days)
+                let age = Age(birthday: dateOfBirthObj!, years: years, months: months, days: days)
                 
-                ageIndicatorView.updateViews(with: age, and: cardExpiryDate)
+                ageIndicatorView.updateViews(with: age, and: expiryDateObj!)
+                
+                if age.years >= AgeLimitSelectionView.ageLimitThreshhold {
+                    printData()
+                }
             }
         }
     }
@@ -382,3 +418,95 @@ extension ViewController: CaptureHelperDeviceDecodedDataDelegate {
     
 }
 
+extension ViewController: UPOSDeviceControlDelegate {
+    
+    func initUPOS() {
+        printerCon = UPOSPrinterController()
+        printerList = UPOSPrinters()
+        
+        //printerCon?.setLogLevel(LOG_SHOW_NEVER)
+        printerCon?.delegate = self
+        printerCon?.setTextEncoding(String.Encoding.ascii.rawValue)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(didBTDeviceList(notification:)), name: NSNotification.Name(rawValue: __NOTIFICATION_NAME_BT_FOUND_PRINTER_), object: nil)
+    }
+    
+    func btLookup() {
+        printerCon?.refreshBTLookup()
+    }
+    
+    @objc func didBTDeviceList(notification: NSNotification) {
+        if let _ = notification.userInfo {
+            if let lookupDevice = notification.userInfo?[__NOTIFICATION_NAME_BT_FOUND_PRINTER_] as! UPOSPrinter? {
+                printerList?.addDevice(lookupDevice)
+                printerList?.save()
+                connect()
+            }
+        }
+    }
+    
+    // function of UPOSDeviceControlDelegate.
+    // it's called from Bixilon library.
+    func statusUpdateEvent(_ status: NSNumber!) {
+        
+    }
+    
+    func connect() {
+        let target = printerList?.getList()?.last as? UPOSPrinter
+        if target == nil {
+            return
+        }
+        
+        printerDevice = target
+        
+        var result = printerCon?.open(target?.modelName)
+        if result == nil || result! != 0 {
+            notificationsView.setMessage(to: "Cannot connect to printer. Reason: " + (UPOS_ERROR_STRINGS[result!] ?? UPOS_UNKOWN_ERROR_STRING))
+            notificationsView.animate(shouldShow: true)
+            return
+        }
+        
+        result = printerCon?.claim(5000)
+        if result == nil || result != 0 {
+            notificationsView.setMessage(to: "Cannot connect to printer. Reason: " + (UPOS_ERROR_STRINGS[result!] ?? UPOS_UNKOWN_ERROR_STRING))
+            notificationsView.animate(shouldShow: true)
+            return
+        }
+        
+        Thread.sleep(forTimeInterval: 0.1)
+        printerCon?.deviceEnabled = true
+        ageIndicatorView.updatePrinterConnection(isConnected: true)
+    }
+    
+    func disconnect() {
+        printerCon?.deviceEnabled = false
+        let result = printerCon?.releaseDevice()
+        
+        if result == nil || result != 0 {
+            return
+        }
+        
+        Thread.sleep(forTimeInterval: 0.1)
+        printerCon?.close()
+    }
+    
+    func printData() {
+        let givenName = map["DAC"] ?? ""
+        printToPrinter(data: "Age verified\n\n")
+        printToPrinter(data: "Hi \(givenName),\n" )
+        printToPrinter(data: "Please enjoy your 10% off\ncoupon for your\ndrink.\n\n")
+        printBarCodeToPrinter(data: "1234567890123")
+        printToPrinter(data: "\n\n\n\n\n")
+        printToPrinter(data: "\u{1B}")
+    }
+    
+    func printToPrinter(data: String) {
+        print(data)
+        printerCon?.printNormal(Int(__UPOS_PRINTER_STATION.PTR_S_RECEIPT.rawValue), data: data)
+    }
+    
+    func printBarCodeToPrinter(data: String) {
+        print(data)
+        printerCon?.printBarcode(Int(__UPOS_PRINTER_STATION.PTR_S_RECEIPT.rawValue), data: data, symbology: PTR_BCS_EAN13, height: 60, width: 200, alignment: PTR_BC_CENTER, textPostion: PTR_BC_TEXT_BELOW)
+    }
+}

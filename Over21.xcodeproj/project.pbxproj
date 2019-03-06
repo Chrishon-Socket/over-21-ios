@@ -21,8 +21,22 @@
 		5274046E219B4EC2007AF90E /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274046D219B4EC2007AF90E /* SettingsController.swift */; };
 		52740471219B5FC3007AF90E /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52740470219B5FC3007AF90E /* SettingsCell.swift */; };
 		52740473219B69DA007AF90E /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52740472219B69DA007AF90E /* Settings.swift */; };
+		6A1E669C221158A600DB28C2 /* libBixolonUPOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A1E669B221158A600DB28C2 /* libBixolonUPOS.a */; };
+		6A1E669F22115B5A00DB28C2 /* lib in Resources */ = {isa = PBXBuildFile; fileRef = 6A1E669E22115B5A00DB28C2 /* lib */; };
 		D3F9ADBA08A10B106A1D2311 /* Pods_Over21.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBDA9A27CA50B44352D316F3 /* Pods_Over21.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6A1E669D221158EB00DB28C2 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		526281FC215EC71C00E291D4 /* Over21.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Over21.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -41,6 +55,9 @@
 		5274046D219B4EC2007AF90E /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		52740470219B5FC3007AF90E /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		52740472219B69DA007AF90E /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		6A1E669B221158A600DB28C2 /* libBixolonUPOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBixolonUPOS.a; path = lib/libBixolonUPOS.a; sourceTree = "<group>"; };
+		6A1E669E22115B5A00DB28C2 /* lib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lib; sourceTree = "<group>"; };
+		6A1E66A022115C6200DB28C2 /* Over21-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Over21-Bridging-Header.h"; sourceTree = "<group>"; };
 		D271FC4D14509537ADB710D2 /* Pods-Over21.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Over21.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Over21/Pods-Over21.debug.xcconfig"; sourceTree = "<group>"; };
 		DE74B030E9D5F1E6F34F58DC /* Pods-Over21.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Over21.release.xcconfig"; path = "Pods/Target Support Files/Pods-Over21/Pods-Over21.release.xcconfig"; sourceTree = "<group>"; };
 		EBDA9A27CA50B44352D316F3 /* Pods_Over21.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Over21.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A1E669C221158A600DB28C2 /* libBixolonUPOS.a in Frameworks */,
 				D3F9ADBA08A10B106A1D2311 /* Pods_Over21.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -61,6 +79,7 @@
 		2CE971A83BC77FC83DE41BEF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6A1E669B221158A600DB28C2 /* libBixolonUPOS.a */,
 				EBDA9A27CA50B44352D316F3 /* Pods_Over21.framework */,
 			);
 			name = Frameworks;
@@ -73,6 +92,7 @@
 				526281FD215EC71C00E291D4 /* Products */,
 				79F5A90334BE1DDD30B31FAC /* Pods */,
 				2CE971A83BC77FC83DE41BEF /* Frameworks */,
+				6A1E669E22115B5A00DB28C2 /* lib */,
 			);
 			sourceTree = "<group>";
 		};
@@ -96,6 +116,7 @@
 				52628208215EC71C00E291D4 /* LaunchScreen.storyboard */,
 				5262820B215EC71C00E291D4 /* Info.plist */,
 				52740472219B69DA007AF90E /* Settings.swift */,
+				6A1E66A022115C6200DB28C2 /* Over21-Bridging-Header.h */,
 			);
 			path = Over21;
 			sourceTree = "<group>";
@@ -153,6 +174,7 @@
 				526281FA215EC71C00E291D4 /* Resources */,
 				5273A2F2217663E800F4634B /* ShellScript */,
 				A62323E203B320A525E6EA6E /* [CP] Embed Pods Frameworks */,
+				6A1E669D221158EB00DB28C2 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -203,6 +225,7 @@
 			files = (
 				5262820A215EC71C00E291D4 /* LaunchScreen.storyboard in Resources */,
 				52628207215EC71C00E291D4 /* Assets.xcassets in Resources */,
+				6A1E669F22115B5A00DB28C2 /* lib in Resources */,
 				52628205215EC71C00E291D4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -459,6 +482,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lib",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -487,8 +514,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.socketmobile.Over21;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "development test com.socketmobile.*";
+				SWIFT_OBJC_BRIDGING_HEADER = "Over21/Over21-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/lib/libBixolonUPOS\"";
 			};
 			name = Debug;
 		};
@@ -506,11 +535,17 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lib",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.socketmobile.Over21;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "crashlytics distribution";
+				SWIFT_OBJC_BRIDGING_HEADER = "Over21/Over21-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/lib/libBixolonUPOS\"";
 			};
 			name = Release;
 		};
