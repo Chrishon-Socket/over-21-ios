@@ -83,7 +83,8 @@ class ResultView: UIView {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        setupUIElements()
     }
     
     
@@ -111,7 +112,7 @@ class ResultView: UIView {
         addSubview(outerView)
         addSubview(centerView)
         addSubview(ageLimitContainerView)
-        ageLimitContainerView.addSubview(ageLabel)
+//        ageLimitContainerView.addSubview(ageLabel)
         
         outerView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         outerView.topAnchor.constraint(equalTo: topAnchor).isActive = true
@@ -129,10 +130,10 @@ class ResultView: UIView {
         ageLimitContainerView.heightAnchor.constraint(equalToConstant: 60).isActive = true
         ageLimitContainerView.widthAnchor.constraint(equalToConstant: 200).isActive = true
         
-        ageLabel.leadingAnchor.constraint(equalTo: ageLimitContainerView.leadingAnchor).isActive = true
-        ageLabel.topAnchor.constraint(equalTo: ageLimitContainerView.topAnchor).isActive = true
-        ageLabel.trailingAnchor.constraint(equalTo: ageLimitContainerView.trailingAnchor).isActive = true
-        ageLabel.bottomAnchor.constraint(equalTo: ageLimitContainerView.bottomAnchor).isActive = true
+//        ageLabel.leadingAnchor.constraint(equalTo: ageLimitContainerView.leadingAnchor).isActive = true
+//        ageLabel.topAnchor.constraint(equalTo: ageLimitContainerView.topAnchor).isActive = true
+//        ageLabel.trailingAnchor.constraint(equalTo: ageLimitContainerView.trailingAnchor).isActive = true
+//        ageLabel.bottomAnchor.constraint(equalTo: ageLimitContainerView.bottomAnchor).isActive = true
     }
     
     private func setupShapeLayers() {

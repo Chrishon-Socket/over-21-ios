@@ -23,6 +23,10 @@
 		52740473219B69DA007AF90E /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52740472219B69DA007AF90E /* Settings.swift */; };
 		6A1E669C221158A600DB28C2 /* libBixolonUPOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A1E669B221158A600DB28C2 /* libBixolonUPOS.a */; };
 		6A1E669F22115B5A00DB28C2 /* lib in Resources */ = {isa = PBXBuildFile; fileRef = 6A1E669E22115B5A00DB28C2 /* lib */; };
+		6A220E9B223076A400B513A3 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A220E9A223076A400B513A3 /* MainViewController.swift */; };
+		6AA8D2432226A7E2004575B6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA8D2422226A7E2004575B6 /* Constants.swift */; };
+		6AB2C219223277A60008D33D /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB2C218223277A60008D33D /* ImageHelper.swift */; };
+		6AB2C21B2232DF380008D33D /* DocHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB2C21A2232DF380008D33D /* DocHelper.swift */; };
 		D3F9ADBA08A10B106A1D2311 /* Pods_Over21.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBDA9A27CA50B44352D316F3 /* Pods_Over21.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +62,10 @@
 		6A1E669B221158A600DB28C2 /* libBixolonUPOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBixolonUPOS.a; path = lib/libBixolonUPOS.a; sourceTree = "<group>"; };
 		6A1E669E22115B5A00DB28C2 /* lib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lib; sourceTree = "<group>"; };
 		6A1E66A022115C6200DB28C2 /* Over21-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Over21-Bridging-Header.h"; sourceTree = "<group>"; };
+		6A220E9A223076A400B513A3 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		6AA8D2422226A7E2004575B6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		6AB2C218223277A60008D33D /* ImageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
+		6AB2C21A2232DF380008D33D /* DocHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocHelper.swift; sourceTree = "<group>"; };
 		D271FC4D14509537ADB710D2 /* Pods-Over21.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Over21.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Over21/Pods-Over21.debug.xcconfig"; sourceTree = "<group>"; };
 		DE74B030E9D5F1E6F34F58DC /* Pods-Over21.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Over21.release.xcconfig"; path = "Pods/Target Support Files/Pods-Over21/Pods-Over21.release.xcconfig"; sourceTree = "<group>"; };
 		EBDA9A27CA50B44352D316F3 /* Pods_Over21.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Over21.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,6 +125,9 @@
 				5262820B215EC71C00E291D4 /* Info.plist */,
 				52740472219B69DA007AF90E /* Settings.swift */,
 				6A1E66A022115C6200DB28C2 /* Over21-Bridging-Header.h */,
+				6AA8D2422226A7E2004575B6 /* Constants.swift */,
+				6AB2C218223277A60008D33D /* ImageHelper.swift */,
+				6AB2C21A2232DF380008D33D /* DocHelper.swift */,
 			);
 			path = Over21;
 			sourceTree = "<group>";
@@ -147,6 +158,7 @@
 				5274046B219B4C7B007AF90E /* ContainerViewController.swift */,
 				52628201215EC71C00E291D4 /* ViewController.swift */,
 				5274046D219B4EC2007AF90E /* SettingsController.swift */,
+				6A220E9A223076A400B513A3 /* MainViewController.swift */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -316,6 +328,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5274046E219B4EC2007AF90E /* SettingsController.swift in Sources */,
+				6AB2C21B2232DF380008D33D /* DocHelper.swift in Sources */,
+				6A220E9B223076A400B513A3 /* MainViewController.swift in Sources */,
 				5274046C219B4C7B007AF90E /* ContainerViewController.swift in Sources */,
 				52628202215EC71C00E291D4 /* ViewController.swift in Sources */,
 				5273A25821700B9700F4634B /* Age.swift in Sources */,
@@ -326,6 +340,8 @@
 				5274045E21922508007AF90E /* AgeLimitSelectionView.swift in Sources */,
 				52740473219B69DA007AF90E /* Settings.swift in Sources */,
 				5274046021926078007AF90E /* NotificationsView.swift in Sources */,
+				6AA8D2432226A7E2004575B6 /* Constants.swift in Sources */,
+				6AB2C219223277A60008D33D /* ImageHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,7 +491,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = GCJ274LWEE;
+				DEVELOPMENT_TEAM = YXS2M77CM6;
 				INFOPLIST_FILE = Over21/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -513,7 +529,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.socketmobile.Over21;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "development test com.socketmobile.*";
+				PROVISIONING_PROFILE_SPECIFIER = "SHAWN WILDCARD DEV";
 				SWIFT_OBJC_BRIDGING_HEADER = "Over21/Over21-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -528,7 +544,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = GCJ274LWEE;
+				DEVELOPMENT_TEAM = YXS2M77CM6;
 				INFOPLIST_FILE = Over21/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -541,7 +557,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.socketmobile.Over21;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "crashlytics distribution";
+				PROVISIONING_PROFILE_SPECIFIER = "SHAWN WILDCARD AD HOC";
 				SWIFT_OBJC_BRIDGING_HEADER = "Over21/Over21-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";

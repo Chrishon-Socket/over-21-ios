@@ -15,6 +15,7 @@ let UPOS_E_FAILURE      = 111
 let UPOS_UNKOWN_ERROR_STRING = "Unknown"
 
 let PTR_BCS_EAN13       = 104
+let PTR_BCS_PDF417      = 201
 
 let PTR_BC_TEXT_NONE = -11
 let PTR_BC_TEXT_ABOVE = -12
@@ -30,3 +31,7 @@ let UPOS_ERROR_STRINGS = [
     UPOS_E_DISABLED: "Not enabled",
     UPOS_E_FAILURE: "The requested operation failed."
 ]
+
+let TYPE_DRIVER_LICENSE_INDEX = 0
+let TYPE_PASSPORT_INDEX = 1
+let TYPE_TRAVEL_ID_INDEX = 2
