@@ -439,6 +439,7 @@ extension MainViewController: UPOSDeviceControlDelegate {
         printToPrinter(data: "Please enjoy your 10% off\ncoupon for your\ndrink.\n\n")
         printBarCodeToPrinter(data: "1234567890123")
         printToPrinter(data: "\n\n\n\n\n")
+        printToPrinter(data: "\u{1B}|100fP")
     }
     
     func printToPrinter(data: String) {
