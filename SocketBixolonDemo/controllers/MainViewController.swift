@@ -9,9 +9,9 @@
 import UIKit
 import SKTCapture
 
-class MainViewController: UIViewController, CaptureHelperDevicePresenceDelegate, CaptureHelperDeviceButtonsDelegate {
-    
-    var capture = CaptureHelper.sharedInstance
+class MainViewController: UIViewController, CaptureHelperDevicePresenceDelegate, CaptureHelperDeviceButtonsDelegate, CaptureHelperDeviceDecodedDataDelegate {
+    private var capture = CaptureHelper.sharedInstance
+    private var isS860Connected = false
     
     private var buttonReleaseIsSupported: Bool = true
     private var animationTimer: Timer?
@@ -33,25 +33,26 @@ class MainViewController: UIViewController, CaptureHelperDevicePresenceDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         UILabel.appearance(whenContainedInInstancesOf: [UISegmentedControl.self]).numberOfLines = 0
+        
+        
+        updatePrinterConnection(false)
+        updateScannerConnection(nil)
         
         setupCapture()
         initUPOS()
         btLookup()
-        
-        updatePrinterConnection(false)
-        updateScannerConnection(nil)
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         //map = parseDoc("DBB01011980\nDBA12312050\nDACABC", TYPE_DRIVER_LICENSE_INDEX, SKTCaptureDataSourceID.symbologyPdf417) ?? [:]
         //map = parseDoc("P<UT0ERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<\nL898902C36UT07408122F1904159ZE184226B<<<<<10", TYPE_PASSPORT_INDEX, SKTCaptureDataSourceID.symbologyPdf417) ?? [:]
         //map = parseDoc("C1USA0427797024MSC1380273242\n<<6010014M2405193IRL<<<<<<<<<<<4MILLS<<KEVIN<JAMES<<<<<<<<<<<<", TYPE_TRAVEL_ID_INDEX, SKTCaptureDataSourceID.symbologyPdf417) ?? [:]
-
+        
         //checkIfUserIsOver21()
     }
     @IBAction func onDocTypeChanged(_ sender: Any) {
@@ -62,7 +63,6 @@ class MainViewController: UIViewController, CaptureHelperDevicePresenceDelegate,
     func didNotifyArrivalForDevice(_ device: CaptureHelperDevice, withResult result: SKTResult) {
         print("scanner arrived")
         updateScannerConnection(device.deviceInfo.name)
-        
         device.dispatchQueue = DispatchQueue.main
         
         configScanner(device)
@@ -96,6 +96,7 @@ class MainViewController: UIViewController, CaptureHelperDevicePresenceDelegate,
     
     
     func didReceiveDecodedData(_ decodedData: SKTCaptureDecodedData?, fromDevice device: CaptureHelperDevice, withResult result: SKTResult) {
+        print("didReceiveDecodedData: \(result)")
         if result == SKTCaptureErrors.E_NOERROR {
             
             // Stop the timer for devices that do not support scanButtonRelease
@@ -138,7 +139,7 @@ class MainViewController: UIViewController, CaptureHelperDevicePresenceDelegate,
                 
                 updateScannedResult(with: age, and: expiryDateObj!)
                 
-                if age.years >= AgeLimitSelectionView.ageLimitThreshhold {
+                if age.years >= getCurrentSelectedAgeLimitValue() {
                     printData()
                 }
             } else {
@@ -149,33 +150,37 @@ class MainViewController: UIViewController, CaptureHelperDevicePresenceDelegate,
         }
     }
     private func configScanner(_ device: CaptureHelperDevice) {
-        if docTypeSegmentedControl.selectedSegmentIndex == TYPE_DRIVER_LICENSE_INDEX {
-            configScannerForDriverLicense(device)
-        } else if docTypeSegmentedControl.selectedSegmentIndex == TYPE_PASSPORT_INDEX {
+        if docTypeSegmentedControl.selectedSegmentIndex == TYPE_PASSPORT_INDEX {
             configScannerForPassport(device)
         } else if docTypeSegmentedControl.selectedSegmentIndex == TYPE_TRAVEL_ID_INDEX {
             configScannerForTravelID(device)
+        } else if docTypeSegmentedControl.selectedSegmentIndex == TYPE_DRIVER_LICENSE_INDEX {
+            configScannerForDriverLicense(device)
+        } else {
+            configScannerForDriverLicense(device)
         }
     }
     private func configScannerForPassport(_ device: CaptureHelperDevice) {
-        let commandArray: [[UInt8]] = [
-            [0x08, 0xC6, 0x04, 0x00, 0xFF, 0xF1, 0xA9, 0x01],
-            [0x08, 0xC6, 0x04, 0x00, 0xFF, 0xF1, 0xAD, 0x04]
-        ]
+        let commandArray: [[UInt8]] = printerLabel.text!.contains("860") ?
+            [SCANNER_CMD_OCR_B_ENABLE, SCANNER_CMD_OCR_ORIENTATION_180, SCANNER_CMD_OCR_B_PASSPORT] :
+            [SCANNER_CMD_OCR_B_ENABLE, SCANNER_CMD_OCR_ORIENTATION_0, SCANNER_CMD_OCR_B_PASSPORT]
         sendCommand(device, withCommandList: commandArray) { (result, data) in
             if result != SKTResult.E_NOERROR {
                 self.showNotification("Error on config scanner for Passport.")
+            } else {
+                self.setScanButtonNotifications(with: device)
             }
         }
     }
     private func configScannerForTravelID(_ device: CaptureHelperDevice) {
-        let commandArray: [[UInt8]] = [
-            [0x08, 0xC6, 0x04, 0x00, 0xFF, 0xF1, 0xA9, 0x01],
-            [0x08, 0xC6, 0x04, 0x00, 0xFF, 0xF1, 0xAD, 0x14]
-        ]
+        let commandArray: [[UInt8]] = printerLabel.text!.contains("860") ?
+            [SCANNER_CMD_OCR_B_ENABLE, SCANNER_CMD_OCR_ORIENTATION_180, SCANNER_CMD_OCR_B_TID] :
+            [SCANNER_CMD_OCR_B_ENABLE, SCANNER_CMD_OCR_ORIENTATION_0, SCANNER_CMD_OCR_B_TID]
         sendCommand(device, withCommandList: commandArray) { (result, data) in
             if result != SKTResult.E_NOERROR {
                 self.showNotification("Error on config scanner for Travel ID.")
+            } else {
+                self.setScanButtonNotifications(with: device)
             }
         }
     }
@@ -197,7 +202,7 @@ class MainViewController: UIViewController, CaptureHelperDevicePresenceDelegate,
                 if result != SKTResult.E_NOERROR || commandList.count == 1 {
                     completion(result, data)
                 } else {
-                    let remaining = Array(commandList[1...commandList.count])
+                    let remaining = Array(commandList[1...commandList.count-1])
                     self.sendCommand(device, withCommandList: remaining, withCompletionHandler: completion)
                 }
             }
@@ -265,9 +270,9 @@ class MainViewController: UIViewController, CaptureHelperDevicePresenceDelegate,
         // If the expiryDate is before (less than) the current date, it is expired
         let isExpired: Bool = cardExpiryDate < Date()
         if age.isOldEnoughToEnter() && isExpired == false {
-            resultView.set(result: .success, withAgeThreshold: AgeLimitSelectionView.ageLimitThreshhold)
+            resultView.set(result: .success, withAgeThreshold: getCurrentSelectedAgeLimitValue())
         } else if age.isOldEnoughToEnter() && isExpired == true {
-            resultView.set(result: .failure, withAgeThreshold: AgeLimitSelectionView.ageLimitThreshhold)
+            resultView.set(result: .failure, withAgeThreshold: getCurrentSelectedAgeLimitValue())
             //extraInformationLabel.text = "This person is old enough to enter but has an expired ID"
         } else {
             let dateComponents = age.timeUntil21YearsOld()
@@ -279,7 +284,7 @@ class MainViewController: UIViewController, CaptureHelperDevicePresenceDelegate,
                 }
             }
             
-            resultView.set(result: .failure, withAgeThreshold: AgeLimitSelectionView.ageLimitThreshhold)
+            resultView.set(result: .failure, withAgeThreshold: getCurrentSelectedAgeLimitValue())
         }
         
         expiryLabel.text = isExpired ? "Expired" : "NOT Expired"
@@ -308,10 +313,12 @@ class MainViewController: UIViewController, CaptureHelperDevicePresenceDelegate,
     }
     
     private func updatePrinterConnection(_ connected: Bool) {
-        if connected {
-            printerLabel.text = "Printer Connected."
-        } else {
-            printerLabel.text = "No Printer Connected."
+        DispatchQueue.main.async {
+            if connected {
+                self.printerLabel.text = "Printer Connected."
+            } else {
+                self.printerLabel.text = "No Printer Connected."
+            }
         }
     }
     
@@ -325,9 +332,9 @@ class MainViewController: UIViewController, CaptureHelperDevicePresenceDelegate,
     
     private func setupCapture() {
         let AppInfo = SKTAppInfo();
-        AppInfo.appKey = "MC0CFG6XvIijqYms9BwonSNZ85ATqotZAhUA+Rb+Paoxq3FdjFAu/ciXvOobatw=";
-        AppInfo.appID = "ios:com.socketmobile.Over21";
-        AppInfo.developerID = "bb57d8e1-f911-47ba-b510-693be162686a";
+        AppInfo.appKey = "MCwCFArEN5wIdw0IBROMh6kJRE5WxzURAhQ/plollDAz9uvlCTDAEqOJ//xlLQ==";
+        AppInfo.appID = "ios:com.socketmobile.ageVerifier";
+        AppInfo.developerID = "91587695-2aad-e411-80dd-fc15b4283a98";
         
         // open Capture Helper only once in the application
         capture.delegateDispatchQueue = DispatchQueue.main
@@ -340,6 +347,11 @@ class MainViewController: UIViewController, CaptureHelperDevicePresenceDelegate,
     private func showWrongBarCode() {
         showNotification("Wrong barcode scanned.")
     }
+    
+    private func getCurrentSelectedAgeLimitValue() -> Int {
+        return AGE_LIMIT_VALUES[ageLimitSegmentedControl.selectedSegmentIndex]
+    }
+    
     private func showNotification(_ message: String) {
         let alertController = UIAlertController(title: "Notification", message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
@@ -420,12 +432,13 @@ extension MainViewController: UPOSDeviceControlDelegate {
     
     func printData() {
         let givenName = map["DAC"] ?? ""
-        printToPrinter(data: "Age verified\n\n")
+        
+        printToPrinter(data: "\u{1B}|lA")
+        printToPrinter(data: "Age verified as \(getCurrentSelectedAgeLimitValue())\n\n")
         printToPrinter(data: "Hi \(givenName),\n" )
         printToPrinter(data: "Please enjoy your 10% off\ncoupon for your\ndrink.\n\n")
         printBarCodeToPrinter(data: "1234567890123")
         printToPrinter(data: "\n\n\n\n\n")
-        printToPrinter(data: "\u{1B}")
     }
     
     func printToPrinter(data: String) {
@@ -438,3 +451,4 @@ extension MainViewController: UPOSDeviceControlDelegate {
         printerCon?.printBarcode(Int(__UPOS_PRINTER_STATION.PTR_S_RECEIPT.rawValue), data: data, symbology: PTR_BCS_PDF417, height: 75, width: 200, alignment: PTR_BC_CENTER, textPostion: PTR_BC_TEXT_BELOW)
     }
 }
+

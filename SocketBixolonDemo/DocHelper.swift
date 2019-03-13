@@ -11,7 +11,7 @@ import SKTCapture
 
 func parseDoc(_ decodedData: SKTCaptureDecodedData?, _ type: Int) -> [String: String] {
     if let data = decodedData?.stringFromDecodedData() {
-        print("\(decodedData?.dataSourceID), \(decodedData?.dataSourceName), \(decodedData?.decodedData)")
+        print("\(decodedData?.dataSourceID.rawValue), \(decodedData?.dataSourceName), \(data)")
         return parseDoc(data, type, decodedData?.dataSourceID) ?? [:]
     }
     
