@@ -1,13 +1,13 @@
 PODS:
-  - Crashlytics (3.11.0):
-    - Fabric (~> 1.8.0)
-  - Fabric (1.8.0)
-  - SKTCapture (1.1.33)
+  - Crashlytics (3.12.0):
+    - Fabric (~> 1.9.0)
+  - Fabric (1.9.0)
+  - SKTCapture (1.1.148)
 
 DEPENDENCIES:
   - Crashlytics
   - Fabric
-  - SKTCapture
+  - SKTCapture (~> 1.1)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -16,10 +16,10 @@ SPEC REPOS:
     - SKTCapture
 
 SPEC CHECKSUMS:
-  Crashlytics: 1448070c1d2731ab71ea7c3faf84ac0f69657287
-  Fabric: 4ac1cdfef3004ccd83ce0959b91eda8a6e37df72
-  SKTCapture: 874255c299b53dd07f73f4af2591e4c9da14665a
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
+  SKTCapture: 4fffd6456304299e89f5855af0aaa95ca96e723e
 
-PODFILE CHECKSUM: cecfd1f701b12cf7e89ce43dc90d725cf02f7362
+PODFILE CHECKSUM: f6e1cb6cd668e0591b830d2414f585cac46d90d9
 
 COCOAPODS: 1.6.0.beta.2

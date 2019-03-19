@@ -97,7 +97,7 @@ class ViewController: UIViewController {
         
         
         // open Capture Helper only once in the application
-        capture.delegateDispatchQueue = DispatchQueue.main
+        capture.dispatchQueue = DispatchQueue.main
         capture.pushDelegate(self)
         capture.openWithAppInfo(AppInfo) { (result) in
             print("Result of Capture initialization: \(result.rawValue)")
