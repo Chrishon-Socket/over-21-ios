@@ -23,6 +23,7 @@
 		52740473219B69DA007AF90E /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52740472219B69DA007AF90E /* Settings.swift */; };
 		6A1E669C221158A600DB28C2 /* libBixolonUPOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A1E669B221158A600DB28C2 /* libBixolonUPOS.a */; };
 		6A1E669F22115B5A00DB28C2 /* lib in Resources */ = {isa = PBXBuildFile; fileRef = 6A1E669E22115B5A00DB28C2 /* lib */; };
+		6AD6E74722414E7F008BC6A6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD6E74622414E7F008BC6A6 /* Constants.swift */; };
 		D3F9ADBA08A10B106A1D2311 /* Pods_Over21.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBDA9A27CA50B44352D316F3 /* Pods_Over21.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 		6A1E669B221158A600DB28C2 /* libBixolonUPOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBixolonUPOS.a; path = lib/libBixolonUPOS.a; sourceTree = "<group>"; };
 		6A1E669E22115B5A00DB28C2 /* lib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lib; sourceTree = "<group>"; };
 		6A1E66A022115C6200DB28C2 /* Over21-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Over21-Bridging-Header.h"; sourceTree = "<group>"; };
+		6AD6E74622414E7F008BC6A6 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D271FC4D14509537ADB710D2 /* Pods-Over21.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Over21.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Over21/Pods-Over21.debug.xcconfig"; sourceTree = "<group>"; };
 		DE74B030E9D5F1E6F34F58DC /* Pods-Over21.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Over21.release.xcconfig"; path = "Pods/Target Support Files/Pods-Over21/Pods-Over21.release.xcconfig"; sourceTree = "<group>"; };
 		EBDA9A27CA50B44352D316F3 /* Pods_Over21.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Over21.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,6 +109,7 @@
 		526281FE215EC71C00E291D4 /* Over21 */ = {
 			isa = PBXGroup;
 			children = (
+				6AD6E74622414E7F008BC6A6 /* Constants.swift */,
 				5273A25621700B8D00F4634B /* models */,
 				52628211215ECD4500E291D4 /* views */,
 				5274046A219B4C4E007AF90E /* controllers */,
@@ -326,6 +329,7 @@
 				5274045E21922508007AF90E /* AgeLimitSelectionView.swift in Sources */,
 				52740473219B69DA007AF90E /* Settings.swift in Sources */,
 				5274046021926078007AF90E /* NotificationsView.swift in Sources */,
+				6AD6E74722414E7F008BC6A6 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
