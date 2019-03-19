@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		202E62F09CB95C103F7A4FCF /* libPods-Over21.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51550EF84563C26FD7E785C4 /* libPods-Over21.a */; };
 		52628200215EC71C00E291D4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526281FF215EC71C00E291D4 /* AppDelegate.swift */; };
 		52628202215EC71C00E291D4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52628201215EC71C00E291D4 /* ViewController.swift */; };
 		52628205215EC71C00E291D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52628203215EC71C00E291D4 /* Main.storyboard */; };
@@ -24,7 +25,6 @@
 		6A1E669C221158A600DB28C2 /* libBixolonUPOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A1E669B221158A600DB28C2 /* libBixolonUPOS.a */; };
 		6A1E669F22115B5A00DB28C2 /* lib in Resources */ = {isa = PBXBuildFile; fileRef = 6A1E669E22115B5A00DB28C2 /* lib */; };
 		6AD6E74722414E7F008BC6A6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD6E74622414E7F008BC6A6 /* Constants.swift */; };
-		D3F9ADBA08A10B106A1D2311 /* Pods_Over21.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBDA9A27CA50B44352D316F3 /* Pods_Over21.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,6 +40,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		51550EF84563C26FD7E785C4 /* libPods-Over21.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Over21.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		526281FC215EC71C00E291D4 /* Over21.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Over21.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		526281FF215EC71C00E291D4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52628201215EC71C00E291D4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,7 +63,6 @@
 		6AD6E74622414E7F008BC6A6 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D271FC4D14509537ADB710D2 /* Pods-Over21.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Over21.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Over21/Pods-Over21.debug.xcconfig"; sourceTree = "<group>"; };
 		DE74B030E9D5F1E6F34F58DC /* Pods-Over21.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Over21.release.xcconfig"; path = "Pods/Target Support Files/Pods-Over21/Pods-Over21.release.xcconfig"; sourceTree = "<group>"; };
-		EBDA9A27CA50B44352D316F3 /* Pods_Over21.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Over21.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +71,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A1E669C221158A600DB28C2 /* libBixolonUPOS.a in Frameworks */,
-				AF29DEC816710C578E8E82A1 /* libPods-Over21.a in Frameworks */,
+				202E62F09CB95C103F7A4FCF /* libPods-Over21.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				6A1E669B221158A600DB28C2 /* libBixolonUPOS.a */,
-				743C563A318302AC5C22AF6C /* libPods-Over21.a */,
+				51550EF84563C26FD7E785C4 /* libPods-Over21.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -177,7 +177,7 @@
 				526281FA215EC71C00E291D4 /* Resources */,
 				5273A2F2217663E800F4634B /* ShellScript */,
 				6A1E669D221158EB00DB28C2 /* CopyFiles */,
-				030EFA3DAF56881FF3DAC5E4 /* [CP] Copy Pods Resources */,
+				C0BC9FF33FBE29110B1492C7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -236,30 +236,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		030EFA3DAF56881FF3DAC5E4 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Over21/Pods-Over21-resources.sh",
-				"${PODS_ROOT}/SKTCapture/softScanBeep.wav",
-				"${PODS_ROOT}/SKTCapture/socketmobilepublickey.pem",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/softScanBeep.wav",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/socketmobilepublickey.pem",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Over21/Pods-Over21-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		4860A1914D0C0FF4F79AE0B0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -294,7 +270,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run c8e0cc0c0ba2daa331415be090a4f7ead5e65570 02bb68c2dc000ff369be6d47fe976ff3509e7534bc0ade56206d935653c75480\n";
+			shellScript = "${PODS_ROOT}/Fabric/run c8e0cc0c0ba2daa331415be090a4f7ead5e65570 02bb68c2dc000ff369be6d47fe976ff3509e7534bc0ade56206d935653c75480\n";
+		};
+		C0BC9FF33FBE29110B1492C7 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Over21/Pods-Over21-resources.sh",
+				"${PODS_ROOT}/SKTCapture/softScanBeep.wav",
+				"${PODS_ROOT}/SKTCapture/socketmobilepublickey.pem",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/softScanBeep.wav",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/socketmobilepublickey.pem",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Over21/Pods-Over21-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		E7A84EDB2188871F00BF2B1B /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
