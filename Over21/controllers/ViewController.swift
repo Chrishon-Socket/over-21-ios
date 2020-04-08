@@ -91,7 +91,7 @@ class ViewController: UIViewController {
         
         
         // open Capture Helper only once in the application
-        capture.delegateDispatchQueue = DispatchQueue.main
+        capture.dispatchQueue = DispatchQueue.main
         capture.pushDelegate(self)
         capture.openWithAppInfo(AppInfo) { (result) in
             print("Result of Capture initialization: \(result.rawValue)")
@@ -177,7 +177,7 @@ extension ViewController: CaptureHelperDevicePresenceDelegate {
         
         device.getDataSourceInfoFromId(SKTCaptureDataSourceID.symbologyPdf417) { (result, captureDataSource) in
     
-            if (result == SKTResult.E_NOERROR) && (captureDataSource?.status == SKTCaptureDataSourceStatus.disabled) {
+            if (result == SKTResult.E_NOERROR) && (captureDataSource?.status == SKTCaptureDataSourceStatus.disable) {
                 
                 guard let captureDataSource = captureDataSource else {
                     // Result == No_Error, but SKTCaptureDataSource is nil. Possible issue with Capture?
@@ -185,7 +185,7 @@ extension ViewController: CaptureHelperDevicePresenceDelegate {
                 }
                 
                 // Enable PDF417, then send result to completion handler
-                captureDataSource.status = .enabled
+                captureDataSource.status = .enable
                 device.setDataSourceInfo(captureDataSource, withCompletionHandler: { (result) in
                     if result != SKTResult.E_NOERROR {
                         print("Error setting DataSource symbology. Result: \(result)")
