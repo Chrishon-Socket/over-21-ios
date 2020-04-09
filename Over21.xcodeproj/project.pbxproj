@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		202E62F09CB95C103F7A4FCF /* libPods-Over21.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51550EF84563C26FD7E785C4 /* libPods-Over21.a */; };
 		52628200215EC71C00E291D4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526281FF215EC71C00E291D4 /* AppDelegate.swift */; };
 		52628202215EC71C00E291D4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52628201215EC71C00E291D4 /* ViewController.swift */; };
 		52628205215EC71C00E291D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52628203215EC71C00E291D4 /* Main.storyboard */; };
@@ -21,10 +22,25 @@
 		5274046E219B4EC2007AF90E /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274046D219B4EC2007AF90E /* SettingsController.swift */; };
 		52740471219B5FC3007AF90E /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52740470219B5FC3007AF90E /* SettingsCell.swift */; };
 		52740473219B69DA007AF90E /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52740472219B69DA007AF90E /* Settings.swift */; };
-		D3F9ADBA08A10B106A1D2311 /* Pods_Over21.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBDA9A27CA50B44352D316F3 /* Pods_Over21.framework */; };
+		6A1E669C221158A600DB28C2 /* libBixolonUPOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A1E669B221158A600DB28C2 /* libBixolonUPOS.a */; };
+		6A1E669F22115B5A00DB28C2 /* lib in Resources */ = {isa = PBXBuildFile; fileRef = 6A1E669E22115B5A00DB28C2 /* lib */; };
+		6AD6E74722414E7F008BC6A6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD6E74622414E7F008BC6A6 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		6A1E669D221158EB00DB28C2 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		51550EF84563C26FD7E785C4 /* libPods-Over21.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Over21.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		526281FC215EC71C00E291D4 /* Over21.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Over21.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		526281FF215EC71C00E291D4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52628201215EC71C00E291D4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -41,9 +57,12 @@
 		5274046D219B4EC2007AF90E /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		52740470219B5FC3007AF90E /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		52740472219B69DA007AF90E /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		6A1E669B221158A600DB28C2 /* libBixolonUPOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBixolonUPOS.a; path = lib/libBixolonUPOS.a; sourceTree = "<group>"; };
+		6A1E669E22115B5A00DB28C2 /* lib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lib; sourceTree = "<group>"; };
+		6A1E66A022115C6200DB28C2 /* Over21-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Over21-Bridging-Header.h"; sourceTree = "<group>"; };
+		6AD6E74622414E7F008BC6A6 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D271FC4D14509537ADB710D2 /* Pods-Over21.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Over21.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Over21/Pods-Over21.debug.xcconfig"; sourceTree = "<group>"; };
 		DE74B030E9D5F1E6F34F58DC /* Pods-Over21.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Over21.release.xcconfig"; path = "Pods/Target Support Files/Pods-Over21/Pods-Over21.release.xcconfig"; sourceTree = "<group>"; };
-		EBDA9A27CA50B44352D316F3 /* Pods_Over21.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Over21.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +70,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3F9ADBA08A10B106A1D2311 /* Pods_Over21.framework in Frameworks */,
+				6A1E669C221158A600DB28C2 /* libBixolonUPOS.a in Frameworks */,
+				202E62F09CB95C103F7A4FCF /* libPods-Over21.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,7 +81,8 @@
 		2CE971A83BC77FC83DE41BEF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				EBDA9A27CA50B44352D316F3 /* Pods_Over21.framework */,
+				6A1E669B221158A600DB28C2 /* libBixolonUPOS.a */,
+				51550EF84563C26FD7E785C4 /* libPods-Over21.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -73,6 +94,7 @@
 				526281FD215EC71C00E291D4 /* Products */,
 				79F5A90334BE1DDD30B31FAC /* Pods */,
 				2CE971A83BC77FC83DE41BEF /* Frameworks */,
+				6A1E669E22115B5A00DB28C2 /* lib */,
 			);
 			sourceTree = "<group>";
 		};
@@ -87,6 +109,7 @@
 		526281FE215EC71C00E291D4 /* Over21 */ = {
 			isa = PBXGroup;
 			children = (
+				6AD6E74622414E7F008BC6A6 /* Constants.swift */,
 				5273A25621700B8D00F4634B /* models */,
 				52628211215ECD4500E291D4 /* views */,
 				5274046A219B4C4E007AF90E /* controllers */,
@@ -96,6 +119,7 @@
 				52628208215EC71C00E291D4 /* LaunchScreen.storyboard */,
 				5262820B215EC71C00E291D4 /* Info.plist */,
 				52740472219B69DA007AF90E /* Settings.swift */,
+				6A1E66A022115C6200DB28C2 /* Over21-Bridging-Header.h */,
 			);
 			path = Over21;
 			sourceTree = "<group>";
@@ -152,7 +176,8 @@
 				526281F9215EC71C00E291D4 /* Frameworks */,
 				526281FA215EC71C00E291D4 /* Resources */,
 				5273A2F2217663E800F4634B /* ShellScript */,
-				A62323E203B320A525E6EA6E /* [CP] Embed Pods Frameworks */,
+				6A1E669D221158EB00DB28C2 /* CopyFiles */,
+				C0BC9FF33FBE29110B1492C7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -203,6 +228,7 @@
 			files = (
 				5262820A215EC71C00E291D4 /* LaunchScreen.storyboard in Resources */,
 				52628207215EC71C00E291D4 /* Assets.xcassets in Resources */,
+				6A1E669F22115B5A00DB28C2 /* lib in Resources */,
 				52628205215EC71C00E291D4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -244,9 +270,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run c8e0cc0c0ba2daa331415be090a4f7ead5e65570 02bb68c2dc000ff369be6d47fe976ff3509e7534bc0ade56206d935653c75480\n";
+			shellScript = "${PODS_ROOT}/Fabric/run c8e0cc0c0ba2daa331415be090a4f7ead5e65570 02bb68c2dc000ff369be6d47fe976ff3509e7534bc0ade56206d935653c75480\n";
 		};
-		A62323E203B320A525E6EA6E /* [CP] Embed Pods Frameworks */ = {
+		C0BC9FF33FBE29110B1492C7 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -254,13 +280,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Over21/Pods-Over21-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Over21/Pods-Over21-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Over21/Pods-Over21-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Over21/Pods-Over21-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E7A84EDB2188871F00BF2B1B /* ShellScript */ = {
@@ -298,6 +324,7 @@
 				5274045E21922508007AF90E /* AgeLimitSelectionView.swift in Sources */,
 				52740473219B69DA007AF90E /* Settings.swift in Sources */,
 				5274046021926078007AF90E /* NotificationsView.swift in Sources */,
+				6AD6E74722414E7F008BC6A6 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,6 +481,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lib",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -484,6 +515,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "development test com.socketmobile.*";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/lib/libBixolonUPOS\"";
 			};
 			name = Debug;
 		};
@@ -501,11 +533,16 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lib",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.socketmobile.Over21;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "crashlytics distribution";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/lib/libBixolonUPOS\"";
 			};
 			name = Release;
 		};

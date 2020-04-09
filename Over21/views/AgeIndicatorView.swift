@@ -24,8 +24,18 @@ class AgeIndicatorView: UIView {
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.medium)
-        //lbl.adjustsFontSizeToFitWidth = true
         lbl.text = "No Scanner Connected"
+        lbl.textColor = UIColor.darkGray
+        lbl.textAlignment = .center
+        lbl.layer.cornerRadius = 10
+        
+        return lbl
+    }()
+    public var printerConnectionLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.medium)
+        lbl.text = "No Printer Connected"
         lbl.textColor = UIColor.darkGray
         lbl.textAlignment = .center
         lbl.layer.cornerRadius = 10
@@ -116,13 +126,18 @@ class AgeIndicatorView: UIView {
         let expiryIndicatorViewHeight: CGFloat = 60.0
         
         
-        [scannerConnectionLabel, extraInformationLabel, resultView, expiryIndicatorView].forEach { addSubview($0) }
+        [scannerConnectionLabel, extraInformationLabel, resultView, expiryIndicatorView, printerConnectionLabel].forEach { addSubview($0) }
         
         
         scannerConnectionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30).isActive = true
         scannerConnectionLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 24).isActive = true
         scannerConnectionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30).isActive = true
         scannerConnectionLabel.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        
+        printerConnectionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30).isActive = true
+        printerConnectionLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 54).isActive = true
+        printerConnectionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30).isActive = true
+        printerConnectionLabel.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
         extraInformationLabel.bottomAnchor.constraint(equalTo: resultView.topAnchor, constant: -60).isActive = true
         extraInformationLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24).isActive = true
@@ -143,12 +158,6 @@ class AgeIndicatorView: UIView {
         
         expiryLabel.centerXAnchor.constraint(equalTo: expiryIndicatorView.centerXAnchor).isActive = true
         expiryLabel.centerYAnchor.constraint(equalTo: expiryIndicatorView.centerYAnchor).isActive = true
-        
-        
-        
-        
-        
-        
     }
     
     public func updateViews(with age: Age, and cardExpiryDate: Date) {
@@ -194,7 +203,11 @@ class AgeIndicatorView: UIView {
     }
     
     public func updateScannerConnection(isConnected: Bool) {
-        scannerConnectionLabel.text = isConnected ? "Connected" : "No Scanner Connected"
+        scannerConnectionLabel.text = isConnected ? "Scanner is Connected" : "No Scanner Connected"
+    }
+    
+    public func updatePrinterConnection(isConnected: Bool) {
+        printerConnectionLabel.text = isConnected ? "Printer is Connected" : "No Printer Connected"
     }
     
     public func updateUserInterface(isScanning: Bool) {

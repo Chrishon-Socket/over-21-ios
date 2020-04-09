@@ -7,7 +7,7 @@ PODS:
 DEPENDENCIES:
   - Crashlytics
   - Fabric
-  - SKTCapture
+  - SKTCapture (~> 1.1)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -21,6 +21,6 @@ SPEC CHECKSUMS:
   Fabric: 4ac1cdfef3004ccd83ce0959b91eda8a6e37df72
   SKTCapture: 49e42fab5b272728a7b275831598af4a6fca379a
 
-PODFILE CHECKSUM: cecfd1f701b12cf7e89ce43dc90d725cf02f7362
+PODFILE CHECKSUM: f6e1cb6cd668e0591b830d2414f585cac46d90d9
 
 COCOAPODS: 1.8.4
