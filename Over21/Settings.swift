@@ -37,7 +37,7 @@ class Settings: NSObject {
         
         let dataSource = SKTCaptureDataSource()
         dataSource.id = symbologyId
-        dataSource.status = .disabled
+        dataSource.status = .disable
         device.setDataSourceInfo(dataSource) { [weak self] (result) in
             guard let strongSelf = self else { return }
             
@@ -71,7 +71,7 @@ class Settings: NSObject {
                 let dataSource = SKTCaptureDataSource()
                 guard let sourceId = SKTCaptureDataSourceID(rawValue: rawValue) else { continue }
                 dataSource.id = sourceId
-                dataSource.status = .enabled
+                dataSource.status = .enable
                 
                 device.setDataSourceInfo(dataSource) { (result) in
                     if result != SKTResult.E_NOERROR {

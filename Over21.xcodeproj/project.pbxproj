@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -278,18 +278,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Over21/Pods-Over21-resources.sh",
-				"${PODS_ROOT}/SKTCapture/softScanBeep.wav",
-				"${PODS_ROOT}/SKTCapture/socketmobilepublickey.pem",
+				"${PODS_ROOT}/Target Support Files/Pods-Over21/Pods-Over21-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/softScanBeep.wav",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/socketmobilepublickey.pem",
+				"${PODS_ROOT}/Target Support Files/Pods-Over21/Pods-Over21-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -520,8 +513,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.socketmobile.Over21;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "development test com.socketmobile.*";
-				SWIFT_OBJC_BRIDGING_HEADER = "Over21/Over21-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/lib/libBixolonUPOS\"";
 			};
@@ -548,8 +540,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.socketmobile.Over21;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "crashlytics distribution";
-				SWIFT_OBJC_BRIDGING_HEADER = "Over21/Over21-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/lib/libBixolonUPOS\"";
 			};
